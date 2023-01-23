@@ -87,26 +87,29 @@ const MobileView = () => {
           >
           <></>
             <SwiperSlide>
-              <div className="w-[304.06px] h-[349px] bg-white rounded-[30px] mt-[-50%]">
-              
+              <div className="w-[100%] h-[70%] bg-white rounded-[30px] mt-[-20%]">
+              Slide 1
               </div>
             </SwiperSlide>
             
             <SwiperSlide>
-            <div className="w-[304.06px] h-[349px] bg-white rounded-[30px] mt-[-50%]">
+            <div className="w-[100%] h-[70%] bg-white rounded-[30px] mt-[-20%]">
                 slide 2
               </div>
             </SwiperSlide >
-            <SwiperSlide  >
-            <div className="w-[304.06px] h-[349px] bg-white rounded-[30px] mt-[-50%]">
+
+            <SwiperSlide>
+            <div className="w-[100%] h-[70%] bg-white rounded-[30px] mt-[-20%]">
                 slide 3
               </div>
-            </SwiperSlide>
-            <SwiperSlide  >
-            <div className="w-[304.06px] h-[349px] bg-white rounded-[30px] mt-[-50%]">
+            </SwiperSlide >
+
+            <SwiperSlide>
+            <div className="w-[100%] h-[70%] bg-white rounded-[30px] mt-[-20%]">
                 slide 4
               </div>
-            </SwiperSlide>
+            </SwiperSlide >
+            
     
           </Swiper>
           </div>
