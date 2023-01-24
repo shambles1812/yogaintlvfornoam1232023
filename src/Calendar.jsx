@@ -1,8 +1,13 @@
 import React from 'react';
 import CalendarDate from './CalendarDate';
-import { useState } from 'react';
+import { useState,useRef,useContext } from 'react';
+import axios from './api/axios';
+import { SlideContext } from './context/SlideContext';
+const API_URL = 'test/api/yoga_date';
 const Calendar = () => {
-    
+    const errRef = useRef()
+    const [schedules,setSchedules] = useState("Init")
+    const {slide_json,setSlideJson} = useContext(SlideContext)
     var curr = new Date; // get current date
     var curr_date = curr.getDate();
     var curr_month = ("0" + curr.getMonth()+1).slice(-2);
@@ -14,6 +19,30 @@ const Calendar = () => {
     // var week_array = Array.from({length: 7}, (_, i) => i + firstday)
     // const day_name = ["א","ב","ג","ד","ה","ו","ש"]
     const [chosenDate, setchosenDate] = useState(curr_date);
+    
+    const handleAPIReqDay = (date) => {
+        
+        const fetch_data = async(e) => {
+            try { 
+           
+                const response = await axios.get(API_URL, 
+                    {params:{
+                      "date":date
+                    }},
+                    {
+                      headers: { 'Content-type': 'application/json'},
+                      withCredentials:true
+                    }).then(res => setSlideJson(res.data));
+                  
+                  
+              } catch (err) {
+                errRef.current.focus();
+                setSlideJson([])
+            }
+        }
+        fetch_data();
+        
+    }
     var week_object = [
         
         {"name":"ש", "date":firstday+6},
@@ -32,12 +61,14 @@ const Calendar = () => {
             {firstday}/{curr_month}-{lastday}/{curr_month}
         </div>
         <div className='grid grid-cols-7 gap-2 h-2/4 text-center pt-[20px] mx-[10px] text-white '>
+            
             {
                 week_object.map( (day => {
                     return(
                         <CalendarDate   day={day} 
                                         isActive={chosenDate === day.date? true : false }
-                                        onShow={(date) => setchosenDate(date)}/>
+                                        onShow={(date) => setchosenDate(date)}
+                                        clickFunction={handleAPIReqDay}/>
                     );
                 }))
             }

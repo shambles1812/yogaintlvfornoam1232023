@@ -1,7 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext} from "react";
 // Import Swiper React components
-
+import AuthContext from "./context/AuthProvider";
+import { UserContext } from "./context/UserContext";
 import MobileView from './MobileView';
+import LoginView from './LoginView';
+import { SlideContext } from "./context/SlideContext";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -11,7 +14,11 @@ import "./index.css"
 
 
 export default function App() {
+  
+  const [user,setUser] = useState('None');
+  const [slide_json,setSlideJson] = useState([])
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
+ 
   
   const [mobileView, setMobileView] = useState(false);
   useEffect(() => {
@@ -21,9 +28,27 @@ export default function App() {
       setMobileView(true);
     }
   }, []);
+  console.log("USERR")
+  console.log(user)
   if(mobileView == true){
     return (
-      <MobileView />
+      <>
+
+      <UserContext.Provider value={{user,setUser}}>
+        {
+          user === "None" ? (<LoginView />)  : 
+          (
+          <SlideContext.Provider value={{slide_json,setSlideJson}}>
+            <MobileView/>
+          </SlideContext.Provider>
+          
+          )
+        }
+      </UserContext.Provider>
+      
+      </>
+     
+      
     );
   }else{
     return (

@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext} from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import Calendar from "./Calendar"
+import Slide from "./Slide";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -10,9 +11,10 @@ import "./styles.css";
 import "./index.css"
 // import required modules
 import { Pagination } from "swiper";
-
+import { SlideContext } from "./context/SlideContext";
 const MobileView = () => {
     var curr = new Date; // get current date
+    const {slide_json,setSlideJson} = useContext(SlideContext)
     const [chosenHour, setchosenHour] = useState(curr.getHours());
     var curr_date = curr.getDate();
     const [chosenDate, setChosenDate] = useState(curr_date);
@@ -43,6 +45,7 @@ const MobileView = () => {
       1,
       0
     ]
+    
     return (
     
         <>
@@ -50,6 +53,7 @@ const MobileView = () => {
         <div className="h-[250px] bg-lavander">
           <Calendar setchosenDate2={setChosenDate} chosenDate={chosenDate}/>
         </div>
+        
         <div className="h-1/3 bg-lavander ">
         <Swiper
             initialSlide={23-chosenHour}
@@ -74,6 +78,7 @@ const MobileView = () => {
         </div>
         </div>
         <div  className="bg-lavander h-2/3">
+          
           <Swiper
             pagination={{
               clickable: true,
@@ -86,33 +91,21 @@ const MobileView = () => {
            
           >
           <></>
-            <SwiperSlide>
-              <div className="w-[100%] h-[70%] bg-white rounded-[30px] mt-[-20%]">
-              Slide 1
-              </div>
+          { slide_json ?
+            slide_json.map( (schedule_json =>{
+              console.log(schedule_json)
+              return(
+                <SwiperSlide>
+              <Slide schedule_json={schedule_json}></Slide>
             </SwiperSlide>
-            
-            <SwiperSlide>
-            <div className="w-[100%] h-[70%] bg-white rounded-[30px] mt-[-20%]">
-                slide 2
-              </div>
-            </SwiperSlide >
+              )})):(<p></p>)
+            }
 
-            <SwiperSlide>
-            <div className="w-[100%] h-[70%] bg-white rounded-[30px] mt-[-20%]">
-                slide 3
-              </div>
-            </SwiperSlide >
-
-            <SwiperSlide>
-            <div className="w-[100%] h-[70%] bg-white rounded-[30px] mt-[-20%]">
-                slide 4
-              </div>
-            </SwiperSlide >
-            
-    
           </Swiper>
+          
+          
           </div>
+          
         </>
       );
 }

@@ -5,18 +5,54 @@ from .models import Yoga                     # add this
 from django.views import View
 from django.http import HttpResponse, HttpResponseNotFound
 import os
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+import datetime
+from rest_framework import permissions
+import subprocess
 class YogaView(viewsets.ModelViewSet):       # add this
     serializer_class = YogaSerializer          # add this
     queryset = Yoga.objects.all()              # add this
-# Create your views here.
-# Add this CBV
-class Assets(View):
+    
+from subprocess import call
+from unicodedata import category
+from urllib.parse import urlencode,quote
+import datetime
 
-    def get(self, _request, filename):
-        path = os.path.join(os.path.dirname(__file__), 'static', filename)
 
-        if os.path.isfile(path):
-            with open(path, 'rb') as file:
-                return HttpResponse(file.read(), content_type='application/javascript')
-        else:
-            return HttpResponseNotFound()
+
+class YogaDetailApiView(APIView):
+    # add permission to check if user is authenticated
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_schedules(self, date):
+        '''
+        Helper method to get the object with given todo_id, and user_id
+        '''
+        try:
+            print(date)
+            my_data = Yoga.objects.filter(class_date=date).values()
+            return my_data
+        except Yoga.DoesNotExist:
+            return None
+
+    # 3. Retrieve
+    def get(self, request, *args, **kwargs):
+        '''
+        Retrieves the schedules for the date
+        '''
+        
+        schedules = self.get_schedules(request.query_params.get('date'))
+        print("Running subprocess")
+        
+        # subprocess.run(["python","bikram_scraper.py"])
+        if not schedules:
+            return Response(
+                {"err": "No Schedules Found"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # serializer = YogaSerializer(schedules)
+        return Response(schedules, status=status.HTTP_200_OK)

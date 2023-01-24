@@ -7,7 +7,9 @@ module.exports = {
     extend: {
       colors: {
         'regal-blue': '#243c5a',
-        'lavander': '#CDB4DB'
+        'lavander': '#CDB4DB',
+        'sky-blue':'#BDE0FE',
+        'inactive-gray':'#666666',
       },
     },
   },

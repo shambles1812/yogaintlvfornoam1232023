@@ -4,4 +4,12 @@ from .models import Yoga
 class YogaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Yoga
-        fields = ('id', 'title', 'description', 'completed')
+        fields = (
+            'studio_logo',
+             'class_date',
+              'class_name', 
+              'class_hour',
+              'class_teacher',
+              'studio_address',
+              'phone_number',
+              'url')

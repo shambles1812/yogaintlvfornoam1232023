@@ -1,5 +1,5 @@
 
-import React from "react";
+import React,{useState}from "react";
 import ReactDOM from "react-dom";
 
 // eslint-disable-next-line
@@ -8,5 +8,18 @@ import "./styles.css";
 
 import App from "./App.jsx";
 
-ReactDOM.render(<App />, document.getElementById("app"));
+import { AuthProvider} from './context/AuthProvider'
+
+
+
+ReactDOM.render(
+    
+   
+        <App />
+    
+        
+    
+ ,
+document.getElementById("app")
+);
   
