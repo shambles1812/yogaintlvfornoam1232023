@@ -13,7 +13,7 @@ const LoginView = () => {
     const errRef = useRef()
     const {user,setUser} = useContext(UserContext)
     
-    // const [user,setUser] = useState('');
+    const [page_user,setPageUser] = useState('');
     const [pwd,setPwd] = useState('');
     const [errMsg,setErrmsg] = useState('');
     const [success,setSuccess] = useState(false);
@@ -25,32 +25,34 @@ const LoginView = () => {
     useEffect(() => {
       setErrmsg('');
     }, [user,pwd])
-    const handleClick = async (e) => {
-      axios.get(LOGIN_URL);
-    };
+    
     const handleSubmit = async (e) => {
+      console.log("PAGE USER")
+      console.log(page_user)
+      console.log("USER login")
+      console.log(user)
       e.preventDefault();
       const hashedPassword = bcrypt.hashSync(pwd);
       try { 
             // console.log(user,hashedPassword)
           const response = await axios.get(LOGIN_URL, 
             {params:{
-              "user":user,
+              "user":page_user,
               "password":hashedPassword
             }},
             {
               headers: { 'Content-type': 'application/json'},
               withCredentials:true
             });
-          setUser(user)
+          setUser(page_user)
           
-          console.log(user)
+          console.log(page_user)
           console.log("DIVIDER")
           
           // const accessToken = response?.data?.accessToken;
           // const roles = response?.data?.roles;
-          setUser('');
-          setPwd('');
+          
+          
           setSuccess(true);
       } catch (err) {
         if(!err?.response){
@@ -65,7 +67,7 @@ const LoginView = () => {
         errRef.current.focus();
       }
       console.log(user,hashedPassword);
-      setUser('');
+      
       
     }
 
@@ -91,8 +93,8 @@ const LoginView = () => {
                 id="username"
                 ref={userRef}
                 autoComplete="Off"
-                // onChange={(e) => setUser(e.target.value)}
-                // value={user}
+                onChange={(e) => setPageUser(e.target.value)}
+                value={page_user}
                 required
                 />
             <label htmlFor="password]">Password:</label>
