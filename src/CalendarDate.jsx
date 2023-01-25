@@ -8,6 +8,7 @@ const CalendarDate = ({day,isActive,onShow,clickFunction}) => {
         onShow(day.date);
         clickFunction((calendar_day.getFullYear()+"-"+calendar_day.getMonth()+1)+"-"+calendar_day.getDate());
     }
+    
     return(
         <div className={isActive ? 'day bg-black rounded-[100px]':'day rounded-[100px]'} onClick={assignActive}>
                         <div className='h-[70px]  '>

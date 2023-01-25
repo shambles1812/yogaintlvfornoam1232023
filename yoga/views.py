@@ -45,7 +45,6 @@ class YogaDetailApiView(APIView):
         '''
         
         schedules = self.get_schedules(request.query_params.get('date'))
-        print("Running subprocess")
         
         # subprocess.run(["python","bikram_scraper.py"])
         if not schedules:

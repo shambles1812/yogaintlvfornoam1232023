@@ -9,24 +9,35 @@ import bcrypt from 'bcryptjs';
 const LOGIN_URL = 'test/custom_auth';
 
 const LoginView = () => {
+
+    
+    
     const userRef = useRef();
     const errRef = useRef()
-    const {user,setUser} = useContext(UserContext)
     
+    const {user,setUser} = useContext(UserContext)
+    useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setUser(user);
+    }
+  }, []);
+    useEffect(() => {
+      localStorage.setItem('user', JSON.stringify(user));
+    }, [user]);
     const [page_user,setPageUser] = useState('');
     const [pwd,setPwd] = useState('');
     const [errMsg,setErrmsg] = useState('');
     const [success,setSuccess] = useState(false);
 
-    useEffect(() => {
-        userRef.current.focus();
-    },[])
+    
 
     useEffect(() => {
       setErrmsg('');
     }, [user,pwd])
     
     const handleSubmit = async (e) => {
+      var curr = new Date()
       console.log("PAGE USER")
       console.log(page_user)
       console.log("USER login")
@@ -38,7 +49,8 @@ const LoginView = () => {
           const response = await axios.get(LOGIN_URL, 
             {params:{
               "user":page_user,
-              "password":hashedPassword
+              "password":hashedPassword,
+              'date':curr.getFullYear()+"-"+curr.getMonth()+1+"-"+curr.getDate()
             }},
             {
               headers: { 'Content-type': 'application/json'},

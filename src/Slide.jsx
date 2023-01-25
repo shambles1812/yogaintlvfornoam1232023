@@ -1,27 +1,27 @@
 import React from 'react';
 
 const Slide = (schedule_json) => {
+    
     var curr = new Date();
 
-    const timeString = schedule_json.schedule_json.class_hour
+    const classStartHour_raw = schedule_json.schedule_json.class_start_hour
+    var classStartHour = classStartHour_raw.split(":");
     // Use the substring() function to extract hours and minutes
-    const hours = timeString.substring(0,2);
-    const minutes = timeString.substring(3,5);
-
+    const hours = classStartHour[0];
+    const minutes = classStartHour[1];
+    
     // Use the setHours() function to assign hours and minutes
     // to the "today" date object
-    const classHour = new Date(curr.setHours(timeString))
-    const classDate = new Date(schedule_json.schedule_json.class_date)
-    console.log(timeString)
-    console.log(hours);
-    console.log(minutes);
-    console.log(classHour);
-    console.log(classDate)
-           
+    
+    
+    var classDate = new Date(schedule_json.schedule_json.class_date)
+    classDate.setHours(hours)
+    classDate.setMinutes(minutes)
+   
+
     return (<>
-        {
-             classHour >= curr.getHours()+1  ? (
-                <div className={curr < classHour || curr > classDate? "brightness-[50%] w-[100%] translate-y-[-20%] h-[60%] bg-white rounded-[30px] mt-[-10%] ":" w-[100%] translate-y-[-20%] h-[60%] bg-white rounded-[30px] mt-[-10%] " }>
+        
+                <div className={ curr > classDate? "brightness-[50%] w-[100%] translate-y-[-20%] h-[60%] bg-white rounded-[30px] mt-[-10%] ":" w-[100%] translate-y-[-20%] h-[60%] bg-white rounded-[30px] mt-[-10%] " }>
         <div className='mt-[5%] h-[75%] w-[90%] mx-auto'>
             <img src={schedule_json.schedule_json.studio_logo} className="object-contain"></img>
         
@@ -30,10 +30,10 @@ const Slide = (schedule_json) => {
         <br></br>
             <div className='bg-lavander h-[50%] w-[95%] mx-auto '>
             <div className="text-right ">
-                det 4
+                det 3
             </div>
             <div className="text-right">
-                {schedule_json.schedule_json.class_hour}
+                {schedule_json.schedule_json.class_start_hour}
                 </div>
             <div className="text-right">
                 det 2
@@ -51,8 +51,8 @@ const Slide = (schedule_json) => {
         </div>
         
         </div> 
-            ): <p></p>
-        }
+             <p></p>
+        
         
         
         

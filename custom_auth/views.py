@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import User
+from .models import User,Logins
 from .serializers import UserSerializer
 # Create your views here.
 from rest_framework import permissions
@@ -13,9 +13,7 @@ from rest_framework import status
 class UserAuthView(APIView):
 
     def check_password(self, username, password):
-        '''
-        Helper method to get the object with given todo_id, and user_id
-        '''
+
         try: 
             db_password = User.objects.get(username=username).__dict__["password"]
             if bcrypt.checkpw(str(db_password).encode("utf-8"),str(password).encode("utf-8")):
@@ -24,7 +22,22 @@ class UserAuthView(APIView):
                 return "Did not Match"
         except User.DoesNotExist:
             return None
-
+    def check_date(self,date):
+        try: 
+            
+            print(f"Date : {date}")
+            login_obj= Logins.objects.get(login_date=date)
+            if login_obj:
+                login_obj.no_of_logins+=1
+                login_obj.save()
+                return "Record Exists"
+                
+        except Logins.DoesNotExist:
+            print("Creating Login for the day and Running Scrapers")
+            new = Logins(login_date=date,no_of_logins=1)
+            new.save()
+            return None
+            
     def get(self,request,*args, **kwargs):
         '''
         Gets user authentication
@@ -37,10 +50,10 @@ class UserAuthView(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
-        if username_valid == "Password Did not Match":
+        if username_valid == "Did not Match":
             return Response(
                 {"err":"Did not match password"},status=status.HTTP_400_BAD_REQUEST
             )
-        
+        self.check_date(request.query_params.get('date'))
         serializers = UserSerializer(username_valid)
         return Response(serializers.data, status=status.HTTP_200_OK)

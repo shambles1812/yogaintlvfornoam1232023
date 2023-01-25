@@ -1,8 +1,9 @@
 import React from 'react';
 import CalendarDate from './CalendarDate';
-import { useState,useRef,useContext } from 'react';
-import axios from './api/axios';
+import { useState,useRef,useContext,useEffect } from 'react';
+
 import { SlideContext } from './context/SlideContext';
+import axios from './api/axios';
 const API_URL = 'test/api/yoga_date';
 const Calendar = () => {
     const errRef = useRef()
@@ -19,7 +20,17 @@ const Calendar = () => {
     // var week_array = Array.from({length: 7}, (_, i) => i + firstday)
     // const day_name = ["א","ב","ג","ד","ה","ו","ש"]
     const [chosenDate, setchosenDate] = useState(curr_date);
-    
+    useEffect(() => {
+        const chosenDate = JSON.parse(localStorage.getItem('chosenDate'));
+        if (chosenDate) {
+           
+            setchosenDate(chosenDate);
+        }
+      }, []);
+      useEffect(() => {
+        console.log(chosenDate)
+        localStorage.setItem('chosenDate', JSON.stringify(chosenDate));
+      }, [chosenDate]);
     const handleAPIReqDay = (date) => {
         
         const fetch_data = async(e) => {
@@ -36,13 +47,17 @@ const Calendar = () => {
                   
                   
               } catch (err) {
-                errRef.current.focus();
+                
                 setSlideJson([])
+                console.log("Empty Slide Json")
             }
         }
-        fetch_data();
+        fetch_data(date);
         
     }
+    useEffect(() => {
+        handleAPIReqDay(curr.getFullYear()+"-"+curr.getMonth()+1+"-"+chosenDate);
+      }, []);
     var week_object = [
         
         {"name":"ש", "date":firstday+6},
@@ -76,7 +91,7 @@ const Calendar = () => {
             
         </div>
         <div className='text-right pt-[20px] h-1/4 bg-lavander'>
-            some characters
+        שיעורים היום:
         </div>
         </>
     );
