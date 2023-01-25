@@ -15,5 +15,5 @@ urlpatterns = [
     path('test/api/', include(router.urls)),  
     path('test/api/yoga_date',views.YogaDetailApiView.as_view() ),
     path('test/custom_auth',auth_views.UserAuthView.as_view() ),
-    # re_path('',TemplateView.as_view(template_name="index.html"))
+    re_path('',TemplateView.as_view(template_name="index.html"))
 ]
