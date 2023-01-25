@@ -89,7 +89,7 @@ const MobileView = () => {
             
             <div className="h-1/3 bg-lavander ">
             <Swiper
-                initialSlide={20-chosenHour}
+                initialSlide={24-chosenHour}
                 slidesPerView={4.5}
                 spaceBetween={5}
                 className="hourSwiper"
