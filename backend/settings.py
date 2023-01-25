@@ -9,11 +9,19 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import django_heroku
+import dotenv
+import dj_database_url
 from pathlib import Path
+
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+
+# BASE_DIR = Path(__file__).resolve().root.root
 
 
 # Quick-start development settings - unsuitable for production
@@ -81,18 +89,44 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'ron_test',
+#         'USER':'test-home',
+#         'PASSWORD':'test123',
+#         'HOST':'localhost',
+#         'PORT':'5432'
+#     }
+# }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'ron_test',
+#         'USER':'bmobccrndlluhc',
+#         'PASSWORD':'8f4ea7da8b4e2a615150eaf4f2cadfc32a0ed3ad51212202646d7c771bb92155',
+#         'HOST':'ec2-52-201-124-168.compute-1.amazonaws.com',
+#         'PORT':'5432',
+#         'DATABASE':'dd5cpq7v9qs722'
+#     }
+# }
+MAX_CONN_AGE = 600
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ron_test',
-        'USER':'test-home',
-        'PASSWORD':'test123',
-        'HOST':'localhost',
-        'PORT':'5432'
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3")
     }
 }
 
+if "DATABASE_URL" in os.environ:
+    # Configure Django for DATABASE_URL environment variable.
+    DATABASES["default"] = dj_database_url.config(
+        conn_max_age=MAX_CONN_AGE, ssl_require=True)
 
+    # Enable test database if found in CI environment.
+    if "CI" in os.environ:
+        DATABASES["default"]["TEST"] = DATABASES["default"]
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -138,8 +172,10 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 ALLOWED_HOSTS = ['*']
 
-import django_heroku
+
 django_heroku.settings(locals())
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_URL = '/static/'
 
@@ -161,7 +197,8 @@ PASSWORD_HASHERS = [
   'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',
   'django.contrib.auth.hashers.CryptPasswordHasher',
 ]
-
+options = DATABASES['default'].get('OPTIONS', {})
+options.pop('sslmode', None)
 # REST_FRAMEWORK = {
 # #    'DEFAULT_AUTHENTICATION_CLASSES': (
 # #        'rest_framework.authentication.TokenAuthentication',
