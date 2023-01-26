@@ -30,7 +30,7 @@ const Slide = (schedule_json) => {
         <br></br>
             <div className='bg-lavander h-[50%] w-[95%] mx-auto '>
             <div className="text-right ">
-                det 3
+            {schedule_json.schedule_json.class_teacher}
             </div>
             <div className="text-right">
                 {schedule_json.schedule_json.class_start_hour}

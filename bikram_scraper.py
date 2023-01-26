@@ -13,7 +13,7 @@ import datetime
 
 class WebSpider(scrapy.Spider):
     name = 'bikramspider'
-    filename = "bikram.csv"
+    filename = "bikram2.csv"
     custom_settings = {
         'FEED_FORMAT': 'csv',
         'FEED_URI': filename,
@@ -95,12 +95,20 @@ class WebSpider(scrapy.Spider):
                 print(f"Class Date: {target_class['date']}")
                 class_date = f"{target_class['date']}"
                 print(f"Class hours {target_class['time']} {target_class['end_time']}")
-                class_hours = f"{target_class['time']} {target_class['end_time']}"
+                # class_hours = f"{target_class['time']} {target_class['end_time']}"
+                class_start_hour = target_class['time']
+                class_end_hour = target_class['end_time']
+                hebrew_teacher = re.sub(r'\s\s+', ' ', class_teacher.replace("\n","").lstrip().rstrip()).encode('UTF-8').decode('UTF-8')
                 yield {
-                            "Class name": re.sub(r'\s\s+', ' ', class_name.replace("\n","").lstrip().rstrip()),
-                            "Class hour": re.sub(r'\s\s+', ' ', class_hours.replace("\n","").lstrip().rstrip()),
-                            "Class teacher":re.sub(r'\s\s+', ' ', class_teacher.replace("\n","").lstrip().rstrip()),
-                            "Class Date": re.sub(r'\s\s+', ' ', class_date.replace("\n","").lstrip().rstrip()),
+                            "studio_logo":"https://bikramyoga.co.il/wp-content/uploads/2016/02/logo.png",
+                            "class_date": re.sub(r'\s\s+', ' ', class_date.replace("\n","").lstrip().rstrip()),
+                            "class_name": re.sub(r'\s\s+', ' ', class_name.replace("\n","").lstrip().rstrip()),
+                            "class_start_hour": re.sub(r'\s\s+', ' ', class_start_hour.replace("\n","").lstrip().rstrip()),
+                            "class_end_hour": re.sub(r'\s\s+', ' ', class_end_hour.replace("\n","").lstrip().rstrip()),
+                            "class_teacher":hebrew_teacher,
+                            "studio_address":"ביקראם יוגה - בן אביגדור 26",
+                            "phone_number":"+9726241807",
+                            "url":r"https://bikramyoga.co.il/%d7%9c%d7%95%d7%97-%d7%a9%d7%99%d7%a2%d7%95%d7%a8%d7%99%d7%9d/",
                         }
 
 
