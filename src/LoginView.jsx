@@ -68,7 +68,7 @@ const LoginView = () => {
           setSuccess(true);
       } catch (err) {
         if(!err?.response){
-          setErrmsg('No Server Response');
+          setErrmsg(process.env.baseURL);
         } else if (err.response?.status === 400){
           setErrmsg('Missing Username or Password');
         } else if (err.response?.status === 401) {
