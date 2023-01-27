@@ -167,7 +167,7 @@ const MobileView = () => {
           <></>
           { slide_json ?
             slide_json.map( (schedule_json =>{
-              console.log(schedule_json)
+       
               var curr = new Date();
 
               const classStartHour_raw = schedule_json.class_start_hour
