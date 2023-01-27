@@ -37,7 +37,7 @@ class UserAuthView(APIView):
             if login_obj:
                 login_obj.no_of_logins+=1
                 login_obj.save()
-                run_scrapers()
+                # run_scrapers()
                 return "Record Exists"
                 
         except Logins.DoesNotExist:
