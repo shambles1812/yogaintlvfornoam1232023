@@ -93,7 +93,7 @@ class WebSpider(scrapy.Spider):
                 class_teacher = ''.join(reversed(class_teacher))
                 print(f"Class name: {target_class['box_categories']['name']}")
                 class_name = f"{target_class['box_categories']['name']}"
-                class_name = ''.join(reversed(class_name))
+                # class_name = ''.join(reversed(class_name))
                 print(f"Class Date: {target_class['date']}")
                 class_date = f"{target_class['date']}"
                 print(f"Class hours {target_class['time']} {target_class['end_time']}")

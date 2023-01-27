@@ -8,7 +8,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 import bcrypt
 import json
+import subprocess
 from rest_framework import status
+
+def run_scrapers():
+    bikram_subprocess = subprocess.Popen('python bikram_scraper.py')
+    bikram_subprocess.wait()
+    bikram_db_upload = subprocess.Popen('python bikram_uploader.py')
+    bikram_db_upload.wait()
 
 class UserAuthView(APIView):
 
@@ -30,10 +37,12 @@ class UserAuthView(APIView):
             if login_obj:
                 login_obj.no_of_logins+=1
                 login_obj.save()
+                run_scrapers()
                 return "Record Exists"
                 
         except Logins.DoesNotExist:
             print("Creating Login for the day and Running Scrapers")
+            
             new = Logins(login_date=date,no_of_logins=1)
             new.save()
             return None

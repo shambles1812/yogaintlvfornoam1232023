@@ -22,6 +22,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        'slide-black':'#000000',
         'black':'#262626',
         'regal-blue': '#243c5a',
         'lavander': '#CDB4DB',

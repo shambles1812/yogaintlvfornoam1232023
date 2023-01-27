@@ -69,6 +69,24 @@ const Calendar = ({setFetching,setMobileDate,chosenDate}) => {
                       withCredentials:true
                     }).then(res => {
                         setSlideJson(res.data);
+                        console.log("HERE")
+                        console.log(res.data)
+                        var my_array = res.data
+                         my_array.sort(
+                            (a,b) => {
+                                var a_date = new Date(a.class_date);
+                                a_date.setHours(a.class_start_hour.split(":")[0])
+                                a_date.setMinutes(a.class_start_hour.split(":")[1])
+
+                                var b_date = new Date(b.class_date);
+                                b_date.setHours(b.class_start_hour.split(":")[0])
+                                b_date.setMinutes(b.class_start_hour.split(":")[1])
+
+                                return a_date - b_date   
+                            }
+                        )
+                        // console.log("HERE SORTED")
+                        // console.log(new_array)
                         setFetching(false)
                     });
                   

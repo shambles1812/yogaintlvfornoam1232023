@@ -7,7 +7,7 @@ const API_URL = 'test/api/yoga_date';
 const LoadingView = () => {
     return (
         <>
-        <div className="z-10 h-screen w-screen absolute bg-black/[0.6]">
+        <div className="z-10 h-screen w-screen absolute bg-white/[0.6]">
           <div className="center w-[80%] mt-[20%]">
             <img src={spinner}></img>
           </div>

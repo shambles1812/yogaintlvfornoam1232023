@@ -95,13 +95,14 @@ const LoginView = () => {
             </h1>
           </section>
         ):(
-          <section>
+          <section className="w-screen h-screen">
           <p ref={errRef} className= {errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
             {errMsg}
             
           </p>
           
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="w-[80%] m-auto h-[70%]">
+            <div className="w-[100%] p-5">
             <label htmlFor="username">Username:</label>
             <input 
                 type="text" 
@@ -112,9 +113,12 @@ const LoginView = () => {
                 value={page_user}
                 required
                 />
+            </div>
+            
+            <div className="w-[100%] m-5">
             <label htmlFor="password]">Password:</label>
             <input 
-                type="text" 
+                type="password" 
                 id="password"
                 ref={userRef}
                 autoComplete="Off"
@@ -122,7 +126,14 @@ const LoginView = () => {
                 value={pwd}
                 required
                 />
-              <button>Sign In</button>
+            </div>
+
+            <div className="translate-x-[-40%]">
+            <button className=" ">Sign In</button>
+            </div>
+            
+            
+             
           </form>
         </section>
         )}

@@ -25,7 +25,7 @@ const Slide = (schedule_json) => {
 
     return (<>
         
-                <div className={ " w-[100%] translate-y-[-25%] h-[60%] bg-white rounded-[30px] mt-[-10%] shadow-xl" }>
+                <div className={ curr < classDate ? (" w-[100%] translate-y-[-25%] h-[60%] bg-white rounded-[30px] mt-[-10%] shadow-xl"):(" w-[100%] translate-y-[-25%] h-[60%] bg-slide-black/[60%] rounded-[30px] mt-[-10%] shadow-xl")}>
         <div className='mt-[5%] h-[75%] w-[90%] mx-auto'>
             <img src={schedule_json.schedule_json.studio_logo} className="!object-contain"></img>
         
@@ -41,7 +41,7 @@ const Slide = (schedule_json) => {
             <div className="font-light font-inter text-[16px] text-right pr-[5%] my-[1%] font-inter">
             <img src={clock_svg} className="!inline s!object-contain !w-[10%] translate-y-[-4px]" >
             </img>
-                {schedule_json.schedule_json.class_end_hour === "null" ?(" "+schedule_json.schedule_json.class_start_hour) :( " "+schedule_json.schedule_json.class_end_hour+ " - " +schedule_json.schedule_json.class_start_hour)}
+                {schedule_json.schedule_json.class_end_hour === "null" ?(" "+schedule_json.schedule_json.class_start_hour) :( " "+schedule_json.schedule_json.class_start_hour+ " - " +schedule_json.schedule_json.class_end_hour)}
                 </div>
             <span>
 
