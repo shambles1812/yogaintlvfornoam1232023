@@ -26,14 +26,14 @@ const Slide = (schedule_json) => {
             <img src={schedule_json.schedule_json.studio_logo} className="object-contain"></img>
         
         </div>
-        <div className="w-[95%]  h-[auto] bg-regal-blue rounded-[30px] mx-auto mt-[2%]">
+        <div className="w-[95%]  h-[auto] bg-white-2 rounded-[30px] mx-auto mt-[2%]">
         <br></br>
             <div className='bg-lavander h-[50%] w-[95%] mx-auto '>
             <div className="text-right ">
             {schedule_json.schedule_json.class_teacher}
             </div>
-            <div className="text-right">
-                {schedule_json.schedule_json.class_start_hour}
+            <div className="text-right pr-[5%]">
+                {schedule_json.schedule_json.class_end_hour === "null" ?(schedule_json.schedule_json.class_start_hour) :( schedule_json.schedule_json.class_end_hour+ "-" +schedule_json.schedule_json.class_start_hour)}
                 </div>
             <div className="text-right">
                 det 2

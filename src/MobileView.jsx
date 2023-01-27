@@ -24,17 +24,25 @@ const MobileView = () => {
     var curr_hour = curr.getHours()
     const {slide_json,setSlideJson} = useContext(SlideContext)
     const [chosenHour, setchosenHour] = useState(curr_hour);
-    
-    
-    
-  
+    const varying_hour = chosenHour;
+   
   const [fetching,setFetching] = useState(true);
 
   useEffect(() => {
+    console.log("SETTING CUR HOUR")
+    
+    
+    // setchosenHour(JSON.parse(localStorage.getItem('chosenHour')))
     const fetching = JSON.parse(localStorage.getItem('fetching'));
     if (fetching) {
       setFetching(fetching);
     }
+    const chosenHour = JSON.parse(localStorage.getItem('chosenHour'));
+      if (chosenHour) {
+         
+          setchosenHour(chosenHour);
+          
+      }
   }, []);
   useEffect(() => {
     console.log(fetching)
@@ -42,18 +50,16 @@ const MobileView = () => {
   }, [fetching]);
 
 
+    // useEffect(() => {
+    //   
+    // }, []);
     useEffect(() => {
-      const chosenHour = JSON.parse(localStorage.getItem('chosenHour'));
-      if (chosenHour) {
-         
-          setchosenHour(chosenHour);
-      }
-    }, []);
-    useEffect(() => {
+      console.log("Onclick chosen hour")
       console.log(chosenHour)
       localStorage.setItem('chosenHour', JSON.stringify(chosenHour));
+      // setchosenHour(chosenHour)
     }, [chosenHour]);
-    var hours = [
+   var hours = [
      
       23,
       22,
@@ -89,15 +95,18 @@ const MobileView = () => {
             
             <div className="h-1/3 bg-lavander ">
             <Swiper
-                initialSlide={25-chosenHour}
+                initialSlide={23-chosenHour}
                 slidesPerView={4.5}
                 spaceBetween={5}
-                className="hourSwiper"
-              >
+                onLoad={(swiper) => swiper.slideTo(chosenHour)}
+                onSlideChange={() => console.log('slide change')}
+                onSwiper={(swiper) => console.log(swiper)}
+                slideToClickedSlide="True"
+                > 
                 {
                   hours.map( (hour => {
                       return (
-                        <SwiperSlide onClick={() => setchosenHour(hour)}>
+                        <SwiperSlide onClick={() => setchosenHour(hour)} className={chosenHour === hour ? "swiper-slide-active":""}>
                         <div className="w-[30px]"></div>
                         <div className={chosenHour === hour ? "w-[75px] h-[30px] bg-white rounded-[15px]":"w-[75px] h-[30px] rounded-[15px]"}>
                         {hour}:00

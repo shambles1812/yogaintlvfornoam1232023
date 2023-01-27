@@ -14,8 +14,8 @@ import "./styles.css";
 import "./index.css"
 import axios from './api/axios';
 
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+// axios.defaults.xsrfCookieName = 'csrftoken'
+// axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
 export default function App() {
   

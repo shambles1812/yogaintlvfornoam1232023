@@ -54,6 +54,7 @@ class UserAuthView(APIView):
             return Response(
                 {"err":"Did not match password"},status=status.HTTP_400_BAD_REQUEST
             )
+        print("I got called")
         self.check_date(request.query_params.get('date'))
         serializers = UserSerializer(username_valid)
         return Response(serializers.data, status=status.HTTP_200_OK)

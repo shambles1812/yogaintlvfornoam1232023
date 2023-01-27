@@ -13,7 +13,7 @@ import datetime
 
 class WebSpider(scrapy.Spider):
     name = 'bikramspider'
-    filename = "bikram2.csv"
+    filename = "bikram3.csv"
     custom_settings = {
         'FEED_FORMAT': 'csv',
         'FEED_URI': filename,
@@ -90,15 +90,18 @@ class WebSpider(scrapy.Spider):
         for target_class in parsed_response["data"]:
                 print(f"Class instructor: {target_class['coach']['full_name']}")
                 class_teacher = f"{target_class['coach']['full_name']}"
+                class_teacher = ''.join(reversed(class_teacher))
                 print(f"Class name: {target_class['box_categories']['name']}")
                 class_name = f"{target_class['box_categories']['name']}"
+                class_name = ''.join(reversed(class_name))
                 print(f"Class Date: {target_class['date']}")
                 class_date = f"{target_class['date']}"
                 print(f"Class hours {target_class['time']} {target_class['end_time']}")
                 # class_hours = f"{target_class['time']} {target_class['end_time']}"
                 class_start_hour = target_class['time']
                 class_end_hour = target_class['end_time']
-                hebrew_teacher = re.sub(r'\s\s+', ' ', class_teacher.replace("\n","").lstrip().rstrip()).encode('UTF-8').decode('UTF-8')
+                hebrew_teacher = re.sub(r'\s\s+', ' ', class_teacher.replace("\n","").lstrip().rstrip())
+                
                 yield {
                             "studio_logo":"https://bikramyoga.co.il/wp-content/uploads/2016/02/logo.png",
                             "class_date": re.sub(r'\s\s+', ' ', class_date.replace("\n","").lstrip().rstrip()),

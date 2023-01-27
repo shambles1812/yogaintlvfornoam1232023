@@ -10,8 +10,11 @@ module.exports = {
         'lavander': '#CDB4DB',
         'sky-blue':'#BDE0FE',
         'inactive-gray':'#666666',
+        'white-2':'#FFFFFF'
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-rtl'),
+  ],
 }
