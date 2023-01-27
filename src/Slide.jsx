@@ -1,5 +1,9 @@
 import React from 'react';
-
+import location_svg from './location 1.svg';
+import clock_svg from './clock 1.svg';
+import yoga_svg from './yoga 1.svg';
+import call_svg from './call.svg';
+import world_svg from './world.svg';
 const Slide = (schedule_json) => {
     
     var curr = new Date();
@@ -21,33 +25,64 @@ const Slide = (schedule_json) => {
 
     return (<>
         
-                <div className={ curr > classDate? "brightness-[50%] w-[100%] translate-y-[-20%] h-[60%] bg-white rounded-[30px] mt-[-10%] ":" w-[100%] translate-y-[-20%] h-[60%] bg-white rounded-[30px] mt-[-10%] " }>
+                <div className={ " w-[100%] translate-y-[-25%] h-[60%] bg-white rounded-[30px] mt-[-10%] shadow-xl" }>
         <div className='mt-[5%] h-[75%] w-[90%] mx-auto'>
-            <img src={schedule_json.schedule_json.studio_logo} className="object-contain"></img>
+            <img src={schedule_json.schedule_json.studio_logo} className="!object-contain"></img>
         
         </div>
-        <div className="w-[95%]  h-[auto] bg-white-2 rounded-[30px] mx-auto mt-[2%]">
-        <br></br>
-            <div className='bg-lavander h-[50%] w-[95%] mx-auto '>
-            <div className="text-right ">
-            {schedule_json.schedule_json.class_teacher}
-            </div>
-            <div className="text-right pr-[5%]">
-                {schedule_json.schedule_json.class_end_hour === "null" ?(schedule_json.schedule_json.class_start_hour) :( schedule_json.schedule_json.class_end_hour+ "-" +schedule_json.schedule_json.class_start_hour)}
-                </div>
-            <div className="text-right">
-                det 2
-                </div>
-            <div className="text-right">
-                det 1
+        <div className="w-[91%]  h-auto bg-white rounded-[18px]  mx-auto my-[8%] py-[2%] shadow-xl">
+        
+            
+            <div className="font-bold text-[18px] text-right font-heebo pr-[5%] pt-[3%]">
+            <p >
+                {" "+schedule_json.schedule_json.class_name}</p>
             </div>
 
+            <div className="font-light font-inter text-[16px] text-right pr-[5%] my-[1%] font-inter">
+            <img src={clock_svg} className="!inline s!object-contain !w-[10%] translate-y-[-4px]" >
+            </img>
+                {schedule_json.schedule_json.class_end_hour === "null" ?(" "+schedule_json.schedule_json.class_start_hour) :( " "+schedule_json.schedule_json.class_end_hour+ " - " +schedule_json.schedule_json.class_start_hour)}
+                </div>
+            <span>
+
+            </span>
+            
+            <div className="text-right  pr-[5%] my-[1%] font-heebo text-[16px]">
+            <p className='!inline'>
+            <img src={yoga_svg} className="!inline s!object-contain !w-[10%] translate-y-[-4px]" >
+            </img>
+            {" "+schedule_json.schedule_json.class_teacher}
+            </p>
             </div>
-            <br></br>
+
+        <div className="text-right  pr-[5%] my-[1%] font-heebo text-[16px]">
+            <p className='!inline'>
+            <img src={location_svg} className="!inline s!object-contain !w-[10%] translate-y-[-4px]" >
+            </img>
+            {" "+schedule_json.schedule_json.studio_address}
+            </p>
+            </div>
+            
+
         </div>
-        <div className='grid grid-cols-2 mt-[5%] gap-2'>
-        <div className='bg-sky-blue h-[120%] rounded-[30px]' ><a  href={schedule_json.schedule_json.url}> website</a> </div>
-        <div className='bg-sky-blue h-[120%] rounded-[30px]'  ><a  href={"tel:+"+schedule_json.schedule_json.phone_number}> phone </a></div>
+        
+        <div className='grid grid-cols-2 mt-[5%] gap-4'>
+        <div className='bg-sky-blue pt-[10%] h-[135%] rounded-[30px] font-heebo'  ><a  href={"tel:+"+schedule_json.schedule_json.phone_number}>
+        <p>
+        {"צלצלי "}
+        <img src={call_svg} className="!inline s!object-contain !w-[20%]" >
+            </img>
+        </p>
+        </a></div>
+        
+        <div className='bg-sky-blue pt-[10%] h-[135%] rounded-[30px] font-heebo'  ><a  href={schedule_json.schedule_json.url}>
+        <p>
+        {"לאתר "}
+        <img src={world_svg} className="!inline s!object-contain !w-[20%]" >
+            </img>
+        </p>
+        </a></div>
+       
         </div>
         
         </div> 

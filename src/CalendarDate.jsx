@@ -10,15 +10,15 @@ const CalendarDate = ({day,isActive,onShow,clickFunction}) => {
     }
     
     return(
-        <div className={isActive ? 'day bg-black rounded-[100px]':'day rounded-[100px]'} onClick={assignActive}>
-                        <div className='h-[70px]  '>
-                            <div className= {isActive ? '  w-[30px] h-[30px] bg-white rounded-full text-black m-auto mt-[5px]': 'w-[30px] h-[30px] rounded-full  m-auto mt-[5px]'}>
+        <div className={isActive ? 'day bg-black rounded-[100px] font-extralight text-[20px]':'font-extralight text-[20px] day rounded-[100px]'} onClick={assignActive}>
+                        <div className='h-[80px] pt-[5px] '>
+                            <div className= {isActive ? '  w-[35px] h-[35px] pt-[2px] bg-white font-normal rounded-full text-black m-auto mt-[5px]': 'w-[30px] h-[30px] rounded-full pt-[2px]  m-auto mt-[5px]'}>
                                 {day.date}
                                 
                             </div>
                             
                         </div>
-                        <div>
+                        <div className='font-heebo pb-[5px]'>
                             {day.name}  
                             
                         </div>

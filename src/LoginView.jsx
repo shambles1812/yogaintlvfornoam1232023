@@ -14,7 +14,7 @@ const LoginView = () => {
     
     const userRef = useRef();
     const errRef = useRef()
-    
+    const [fetching,setFetching] = useState(false);
     const {user,setUser} = useContext(UserContext)
     useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -30,7 +30,10 @@ const LoginView = () => {
     const [errMsg,setErrmsg] = useState('');
     const [success,setSuccess] = useState(false);
 
-    
+    useEffect(()=>{
+      localStorage.setItem('fetching', JSON.stringify(fetching));
+      console.log("Fetching set on local storage")
+    },[fetching])
 
     useEffect(() => {
       setErrmsg('');
@@ -57,7 +60,7 @@ const LoginView = () => {
               withCredentials:true
             });
           setUser(page_user)
-          
+          setFetching(true)
           console.log(page_user)
           console.log("DIVIDER")
           
