@@ -138,7 +138,9 @@ const MobileView = () => {
             spaceBetween={5}
             onLoad={(swiper) => swiper.slideTo(chosenHour)}
             onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => console.log(swiper)}
+            // onSwiper={(swiper) => console.log(swiper)}
+            onSwiper={(swiper) => console.log(swiper.slideTo(chosenHour))}
+            
             slideToClickedSlide={true}
             className={chosenHour}
             > 
@@ -194,15 +196,7 @@ const MobileView = () => {
                     </div>
   
             </SwiperSlide>
-            <SwiperSlide >
-                    <div className="w-[30px] font-bold font-inter" >
-                      <div className="w-[75px] h-[30px] rounded-[15px]">
-                     
-                        
-                      </div>
-                    </div>
-  
-            </SwiperSlide>
+      
           </Swiper>
         </div>
         </div>
