@@ -136,7 +136,7 @@ const MobileView = () => {
             initialSlide={chosenHour}
             slidesPerView={5}
             spaceBetween={5}
-            onLoad={(swiper) => swiper.slideTo(chosenHour)}
+            onActiveIndexChange={() => console.log("active index changed to "+ chosenHour)}
             onSlideChange={() => console.log('slide change')}
             // onSwiper={(swiper) => console.log(swiper)}
             onSwiper={(swiper) => console.log(swiper.slideTo(chosenHour))}
