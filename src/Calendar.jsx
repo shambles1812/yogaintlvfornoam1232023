@@ -183,7 +183,7 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                                 }else{
                                     setMobileHour(parseInt(hour))
                                     
-                                    return false;
+                                    return;
                                 }
                             }))
                                 
