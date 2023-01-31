@@ -204,6 +204,8 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
         
     }
     useEffect(() => {
+        console.log("USE EFFECT CALENDAR")
+        console.log(curr.getFullYear()+"-"+curr.getMonth()+1+"-"+chosenDate)
         handleAPIReqDay(curr.getFullYear()+"-"+curr.getMonth()+1+"-"+chosenDate);
       }, []);
     var week_object = [
