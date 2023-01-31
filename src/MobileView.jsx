@@ -60,7 +60,8 @@ const MobileView = () => {
     
     const chosenHour = JSON.parse(localStorage.getItem('chosenHour'));
       if (chosenHour) {
-          
+        console.log("CHOSEN HOUR AFTER PARSE")
+          console.log(chosenHour)
           setchosenHour(chosenHour);
           
       }
@@ -125,7 +126,7 @@ const MobileView = () => {
         }<>
         <div className="z-0">
         <div className="h-[240px] bg-lavander">
-          <Calendar setFetching={setFetching} setMobileDate={setchosenDate} chosenDate={chosenDate}/>
+          <Calendar setFetching={setFetching} setMobileDate={setchosenDate} chosenDate={chosenDate} setMobileHour={setchosenHour} chosenHour={chosenHour}/>
         </div>
         
         <div className="h-1/3 bg-lavander ">

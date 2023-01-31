@@ -5,7 +5,7 @@ import { useState,useRef,useContext,useEffect } from 'react';
 import { SlideContext } from './context/SlideContext';
 import axios from './api/axios';
 const API_URL = 'test/api/yoga_date';
-const Calendar = ({setFetching,setMobileDate,chosenDate}) => {
+const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour}) => {
     const errRef = useRef()
     const [schedules,setSchedules] = useState("Init")
     const {slide_json,setSlideJson} = useContext(SlideContext)
@@ -147,11 +147,12 @@ const Calendar = ({setFetching,setMobileDate,chosenDate}) => {
                         )
                         console.log("SORTED DATA")
                         var slide_date = my_array[0].class_date.split("-")[2]
-
+                        console.log(my_array)
                         if(slide_date == curr_date){
-                            my_array.every((schedule) => {
+                            my_array.forEach((schedule => {
                                 console.log("THIS SCHEDULE")
-                                
+                                console.log(schedule)
+                                const today_date = new Date;
                                 var scheduleDate = new Date(schedule.class_date);
                                 const classStartHour_raw = schedule.class_start_hour
                                 var classStartHour = classStartHour_raw.split(":");
@@ -161,19 +162,24 @@ const Calendar = ({setFetching,setMobileDate,chosenDate}) => {
                                 
                                 scheduleDate.setHours(hour)
                                 scheduleDate.setMinutes(minutes)
-                                console.log(schedule)
                                 console.log("CHOOSING AN HOUR")
                                 console.log(hour)
-                                if(scheduleDate>curr){
-                                    localStorage.setItem('chosenHour', hour);
+                                if(scheduleDate<today_date){
+                                    console.log(scheduleDate)
+                                    console.log(today_date)
+                                    console.log("scheduleDate Greater than current date")
+                                    setMobileHour(hour)
                                     
                                     return false;
                                 }
-                            })
+                            }))
+                                
+                                
+                            
                         }else{
                             console.log("THE SLIDE THE IS NOT THE SAME AS TODAY")
                             const new_hour = my_array[0].class_start_hour.split(":")[0]
-                            localStorage.setItem('chosenHour', new_hour);
+                            setMobileHour(new_hour)
                         }
                         // console.log("HERE SORTED")
                         // console.log(new_array)
