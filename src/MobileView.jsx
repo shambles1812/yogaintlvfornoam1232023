@@ -60,7 +60,7 @@ const MobileView = () => {
     
     const chosenHour = JSON.parse(localStorage.getItem('chosenHour'));
       if (chosenHour) {
-         
+          
           setchosenHour(chosenHour);
           
       }
@@ -187,7 +187,10 @@ const MobileView = () => {
               var classDate = new Date(schedule_json.class_date)
               classDate.setHours(hours)
               classDate.setMinutes(minutes)
-              
+
+              console.log("CLASS Date")
+            
+              console.log(classDate)
               if(curr < classDate){  // available events
                 return(
                   <>

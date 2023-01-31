@@ -130,8 +130,7 @@ const Calendar = ({setFetching,setMobileDate,chosenDate}) => {
                       withCredentials:true
                     }).then(res => {
                         setSlideJson(res.data);
-                        console.log("HERE")
-                        console.log(res.data)
+                        
                         var my_array = res.data
                          my_array.sort(
                             (a,b) => {
@@ -146,6 +145,36 @@ const Calendar = ({setFetching,setMobileDate,chosenDate}) => {
                                 return a_date - b_date   
                             }
                         )
+                        console.log("SORTED DATA")
+                        var slide_date = my_array[0].class_date.split("-")[2]
+
+                        if(slide_date == curr_date){
+                            my_array.every((schedule) => {
+                                console.log("THIS SCHEDULE")
+                                
+                                var scheduleDate = new Date(schedule.class_date);
+                                const classStartHour_raw = schedule.class_start_hour
+                                var classStartHour = classStartHour_raw.split(":");
+                                // Use the substring() function to extract hours and minutes
+                                const hour = classStartHour[0];
+                                const minutes = classStartHour[1];
+                                
+                                scheduleDate.setHours(hour)
+                                scheduleDate.setMinutes(minutes)
+                                console.log(schedule)
+                                console.log("CHOOSING AN HOUR")
+                                console.log(hour)
+                                if(scheduleDate>curr){
+                                    localStorage.setItem('chosenHour', hour);
+                                    
+                                    return false;
+                                }
+                            })
+                        }else{
+                            console.log("THE SLIDE THE IS NOT THE SAME AS TODAY")
+                            const new_hour = my_array[0].class_start_hour.split(":")[0]
+                            localStorage.setItem('chosenHour', new_hour);
+                        }
                         // console.log("HERE SORTED")
                         // console.log(new_array)
                         setFetching(false)
