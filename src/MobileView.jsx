@@ -135,16 +135,17 @@ const MobileView = () => {
         <div className="h-1/3 bg-lavander ">
         <Swiper
             initialSlide={chosenHour}
+            snapIndex={chosenHour}
             slidesPerView={5}
             spaceBetween={5}
             onActiveIndexChange={() => console.log("active index changed to "+ chosenHour)}
             onSlideChange={() => console.log('slide change')}
             onUpdate={()=> console.log("updated")}
-            // onSwiper={(swiper) => console.log(swiper)}
-            onSwiper={(swiper) => setHourSwiper(swiper)}
+            // onSwiper={(swiper) => console.log(swiper)}            
             slideToClickedSlide={true}
+            onSwiper={(swiper) => setHourSwiper(swiper)}
             > 
-            {hourSwiper.slideTo(chosenHour)}
+            
             {
               
               hours.map( (hour => {
