@@ -155,6 +155,7 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                         console.log(my_array)
                         if(slide_date == curr_date){
                             
+
                             my_array.some((schedule => {
                                 console.log("THIS SCHEDULE")
                                 console.log(schedule)
@@ -181,9 +182,9 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                                     
                                     
                                 }else{
-                                    setMobileHour(parseInt(hour))
+                                    setMobileHour(parseInt(new_hour))
                                     
-                                    return;
+                                    return "Found";
                                 }
                             }))
                                 
