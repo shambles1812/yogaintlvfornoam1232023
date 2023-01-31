@@ -148,7 +148,7 @@ const MobileView = () => {
             {
               hours.map( (hour => {
                   return (
-                    <SwiperSlide onClick={() => setchosenHour(hour)} className={chosenHour === toString(hour) ? "swiper-slide-active":""}>
+                    <SwiperSlide onClick={() => setchosenHour(hour)} className={chosenHour === toString(hour) ? "swiper-slide-active chosenHour":"chosenHour"}>
                     <div className="w-[30px] font-bold font-inter">
                       <div className={chosenHour === hour ? "w-[75px] h-[30px] bg-white rounded-[15px]":"w-[75px] h-[30px] rounded-[15px]"}>
                       {hour}:00
@@ -196,7 +196,15 @@ const MobileView = () => {
                     </div>
   
             </SwiperSlide>
-      
+            <SwiperSlide >
+                    <div className="w-[30px] font-bold font-inter" >
+                      <div className="w-[75px] h-[30px] rounded-[15px]">
+                     
+                        
+                      </div>
+                    </div>
+  
+            </SwiperSlide>
           </Swiper>
         </div>
         </div>
