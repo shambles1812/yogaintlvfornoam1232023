@@ -85,7 +85,7 @@ const MobileView = () => {
       console.log(chosenHour)
       console.log(slide_json)
       localStorage.setItem('chosenHour', JSON.stringify(chosenHour));
-      // setchosenHour(chosenHour)
+      setchosenHour(chosenHour)
     }, [chosenHour]);
 
     useEffect(() => {
