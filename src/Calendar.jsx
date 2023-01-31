@@ -170,9 +170,10 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                                 if(scheduleDate<today_date){
                                     console.log(scheduleDate)
                                     console.log(today_date)
-                                    console.log("scheduleDate Greater than current date")
-                                    
-                                    setMobileHour(parseInt(new_hour))
+                                    scheduleDate.setDate(scheduleDate.getDate()+1)
+                                    console.log("TOMORROW WILL BE")
+                                    console.log(scheduleDate.getDate())
+                                    setMobileDate(scheduleDate.getDate())
                                     
                                 }else{
                                     setMobileHour(parseInt(hour))
