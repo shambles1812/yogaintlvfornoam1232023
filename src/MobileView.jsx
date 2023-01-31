@@ -30,7 +30,7 @@ const MobileView = () => {
     //   curr_date = local_date
     // }
     const [chosenHour, setchosenHour] = useState(curr_hour);
-    const [hourSwiper, setHourSwiper] = useState([]);
+    const [hourSwiper, setHourSwiper] = useState(null);
     const [fetching,setFetching] = useState(false);
     const [chosenDate, setchosenDate] = useState(curr_date);
     console.log("Mobile View Chosen Date")
@@ -143,10 +143,10 @@ const MobileView = () => {
             onUpdate={()=> console.log("updated")}
             // onSwiper={(swiper) => console.log(swiper)}            
             slideToClickedSlide={true}
-            onSwiper={(swiper) => setHourSwiper(swiper)}
-            onUpdate={(swiper) => {swiper.slideTo(chosenHour)}}
-            > 
+            onSwiper={setHourSwiper}
             
+            > 
+            {hourSwiper? hourSwiper.slideTo(chosenHour): console.log("nothing initialized")}
             {
               
               hours.map( (hour => {
