@@ -146,12 +146,13 @@ const MobileView = () => {
             slideToClickedSlide={true}
             className={chosenHour}
             > 
-            
+            {swiper.slideTo(chosenHour)}
             {
               
               hours.map( (hour => {
+                
                   return (
-                    <SwiperSlide onLoad={()=>{swiper.slideTo(chosenHour)}} onClick={() => setchosenHour(hour)} className={chosenHour === toString(hour) ? "swiper-slide-active":""}>
+                    <SwiperSlide onClick={() => setchosenHour(hour)} className={chosenHour === toString(hour) ? "swiper-slide-active":""}>
                     <div className="w-[30px] font-bold font-inter">
                       <div className={chosenHour === hour ? "w-[75px] h-[30px] bg-white rounded-[15px]":"w-[75px] h-[30px] rounded-[15px]"}>
                       {hour}:00
