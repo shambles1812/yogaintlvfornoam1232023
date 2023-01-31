@@ -144,6 +144,7 @@ const MobileView = () => {
             // onSwiper={(swiper) => console.log(swiper)}            
             slideToClickedSlide={true}
             onSwiper={(swiper) => setHourSwiper(swiper)}
+            onUpdate={(swiper) => {swiper.slideTo(chosenHour)}}
             > 
             
             {
