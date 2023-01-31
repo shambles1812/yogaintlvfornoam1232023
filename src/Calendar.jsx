@@ -1,11 +1,12 @@
 import React from 'react';
 import CalendarDate from './CalendarDate';
 import { useState,useRef,useContext,useEffect } from 'react';
-
+import { useSwiper } from 'swiper/react';
 import { SlideContext } from './context/SlideContext';
 import axios from './api/axios';
 const API_URL = 'test/api/yoga_date';
 const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour}) => {
+    const swiper = useSwiper();
     const errRef = useRef()
     const [schedules,setSchedules] = useState("Init")
     const {slide_json,setSlideJson} = useContext(SlideContext)
@@ -174,9 +175,12 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                                     console.log("TOMORROW WILL BE")
                                     console.log(scheduleDate.getDate())
                                     setMobileDate(scheduleDate.getDate())
+                                    swiper.slideTo(scheduleDate.getDate())
+                                    
                                     
                                 }else{
                                     setMobileHour(parseInt(hour))
+                                    swiper.slideTo(parseInt(hour))
                                     return false;
                                 }
                             }))
@@ -186,6 +190,7 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                         }else{
                             console.log("THE SLIDE THE IS NOT THE SAME AS TODAY")
                             setMobileHour(parseInt(new_hour))
+                            swiper.slideTo(parseInt(new_hour))
                         }
                         // console.log("HERE SORTED")
                         // console.log(new_array)
