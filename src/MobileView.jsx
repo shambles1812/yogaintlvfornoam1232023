@@ -93,6 +93,7 @@ const MobileView = () => {
 
     })
    var hours = [
+      
      
       23,
       22,
@@ -140,6 +141,15 @@ const MobileView = () => {
             onSwiper={(swiper) => console.log(swiper)}
             slideToClickedSlide={true}
             > 
+            <SwiperSlide >
+                    <div className="w-[30px] font-bold font-inter" >
+                      <div className="w-[75px] h-[30px] rounded-[15px]">
+                       test
+                        
+                      </div>
+                    </div>
+  
+            </SwiperSlide>
             {
               hours.map( (hour => {
                   return (

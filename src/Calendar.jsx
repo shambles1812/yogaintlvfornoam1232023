@@ -147,8 +147,11 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                         )
                         console.log("SORTED DATA")
                         var slide_date = my_array[0].class_date.split("-")[2]
+                        const new_hour = my_array[0].class_start_hour.split(":")[0]
+                            
                         console.log(my_array)
                         if(slide_date == curr_date){
+                            
                             my_array.forEach((schedule => {
                                 console.log("THIS SCHEDULE")
                                 console.log(schedule)
@@ -168,8 +171,11 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                                     console.log(scheduleDate)
                                     console.log(today_date)
                                     console.log("scheduleDate Greater than current date")
-                                    setMobileHour(parseInt(hour))
                                     
+                                    setMobileHour(parseInt(new_hour))
+                                    
+                                }else{
+                                    setMobileHour(parseInt(hour))
                                     return false;
                                 }
                             }))
@@ -178,7 +184,6 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                             
                         }else{
                             console.log("THE SLIDE THE IS NOT THE SAME AS TODAY")
-                            const new_hour = my_array[0].class_start_hour.split(":")[0]
                             setMobileHour(parseInt(new_hour))
                         }
                         // console.log("HERE SORTED")
