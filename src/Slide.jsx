@@ -78,7 +78,7 @@ const Slide = (schedule_json) => {
         <div className='bg-sky-blue pt-[10%] h-[135%] rounded-[30px] font-heebo'  ><a  href={schedule_json.schedule_json.url}>
         <p>
         {"לאתר "}
-        <img src={world_svg} className="!inline s!object-contain !w-[20%]" >
+        <img src={world_svg} className="!inline s!object-contain !w-[20%]" > 
             </img>
         </p>
         </a></div>
@@ -96,5 +96,5 @@ const Slide = (schedule_json) => {
         
     );
 }
-
+// revamping
 export default Slide;
