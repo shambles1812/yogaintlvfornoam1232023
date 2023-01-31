@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState, useContext} from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Calendar from "./Calendar"
 import Slide from "./Slide";
-
+import { useSwiper } from 'swiper/react';
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -20,6 +20,7 @@ function sleep(ms) {
 }
 
 const MobileView = () => {
+    const swiper = useSwiper();
     var curr = new Date(); // get current date
     var curr_hour = curr.getHours()
     var curr_date = curr.getDate();
@@ -138,6 +139,7 @@ const MobileView = () => {
             spaceBetween={5}
             onActiveIndexChange={() => console.log("active index changed to "+ chosenHour)}
             onSlideChange={() => console.log('slide change')}
+            onUpdate={()=> console.log("updated")}
             // onSwiper={(swiper) => console.log(swiper)}
             onSwiper={(swiper) => console.log(swiper.slideTo(chosenHour))}
             
@@ -146,9 +148,10 @@ const MobileView = () => {
             > 
             
             {
+              
               hours.map( (hour => {
                   return (
-                    <SwiperSlide onClick={() => setchosenHour(hour)} className={chosenHour === toString(hour) ? "swiper-slide-active":""}>
+                    <SwiperSlide onLoad={()=>{swiper.slideTo(chosenHour)}} onClick={() => setchosenHour(hour)} className={chosenHour === toString(hour) ? "swiper-slide-active":""}>
                     <div className="w-[30px] font-bold font-inter">
                       <div className={chosenHour === hour ? "w-[75px] h-[30px] bg-white rounded-[15px]":"w-[75px] h-[30px] rounded-[15px]"}>
                       {hour}:00
@@ -159,6 +162,7 @@ const MobileView = () => {
                     </SwiperSlide>
                     );
                   }))
+                  
             }
             <SwiperSlide >
                     <div className="w-[30px] font-bold font-inter" >
