@@ -140,6 +140,7 @@ const MobileView = () => {
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
             slideToClickedSlide={true}
+            className={chosenHour}
             > 
             <SwiperSlide >
                     <div className="w-[30px] font-bold font-inter" >
