@@ -47,13 +47,24 @@ const LoginView = () => {
       console.log(user)
       e.preventDefault();
       const hashedPassword = bcrypt.hashSync(pwd);
+      var date_now = new Date
+        console.log(date_now)
+       
+        var first_time_api_date = date_now.getDate()
+        if (first_time_api_date < 10){
+            first_time_api_date = "0"+first_time_api_date
+        }
+        var first_time_api_month = date_now.getMonth()+1
+        if (first_time_api_month < 10){
+            first_time_api_month = "0"+first_time_api_month
+        }
       try { 
             // console.log(user,hashedPassword)
           const response = await axios.get(LOGIN_URL, 
             {params:{
               "user":page_user,
               "password":hashedPassword,
-              'date':curr.getFullYear()+"-"+curr.getMonth()+1+"-"+curr.getDate()
+              'date':curr.getFullYear()+"-"+first_time_api_month+"-"+first_time_api_date
             }},
             {
               headers: { 'Content-type': 'application/json'},

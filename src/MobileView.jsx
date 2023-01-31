@@ -142,15 +142,7 @@ const MobileView = () => {
             slideToClickedSlide={true}
             className={chosenHour}
             > 
-            <SwiperSlide >
-                    <div className="w-[30px] font-bold font-inter" >
-                      <div className="w-[75px] h-[30px] rounded-[15px]">
-                       test
-                        
-                      </div>
-                    </div>
-  
-            </SwiperSlide>
+            
             {
               hours.map( (hour => {
                   return (
@@ -166,6 +158,51 @@ const MobileView = () => {
                     );
                   }))
             }
+            <SwiperSlide >
+                    <div className="w-[30px] font-bold font-inter" >
+                      <div className="w-[75px] h-[30px] rounded-[15px]">
+                       
+                        
+                      </div>
+                    </div>
+  
+            </SwiperSlide>
+            <SwiperSlide >
+                    <div className="w-[30px] font-bold font-inter" >
+                      <div className="w-[75px] h-[30px] rounded-[15px]">
+                     
+                        
+                      </div>
+                    </div>
+  
+            </SwiperSlide>
+            <SwiperSlide >
+                    <div className="w-[30px] font-bold font-inter" >
+                      <div className="w-[75px] h-[30px] rounded-[15px]">
+                     
+                        
+                      </div>
+                    </div>
+  
+            </SwiperSlide>
+            <SwiperSlide >
+                    <div className="w-[30px] font-bold font-inter" >
+                      <div className="w-[75px] h-[30px] rounded-[15px]">
+                     
+                        
+                      </div>
+                    </div>
+  
+            </SwiperSlide>
+            <SwiperSlide >
+                    <div className="w-[30px] font-bold font-inter" >
+                      <div className="w-[75px] h-[30px] rounded-[15px]">
+                     
+                        
+                      </div>
+                    </div>
+  
+            </SwiperSlide>
           </Swiper>
         </div>
         </div>

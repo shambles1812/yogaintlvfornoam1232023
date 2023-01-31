@@ -204,9 +204,21 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
         
     }
     useEffect(() => {
+        var date_now = new Date
+        console.log(date_now)
+       
+        var first_time_api_date = chosenDate
+        if (first_time_api_date < 10){
+            first_time_api_date = "0"+first_time_api_date
+        }
+        var first_time_api_month = date_now.getMonth()+1
+        if (first_time_api_month < 10){
+            first_time_api_month = "0"+first_time_api_month
+        }
+            
         console.log("USE EFFECT CALENDAR")
-        console.log(curr.getFullYear()+"-"+curr.getMonth()+1+"-"+chosenDate)
-        handleAPIReqDay(curr.getFullYear()+"-"+curr.getMonth()+1+"-"+chosenDate);
+        console.log(date_now.getFullYear()+"-"+first_time_api_month+"-"+first_time_api_date)
+        handleAPIReqDay(date_now.getFullYear()+"-"+first_time_api_month+"-"+first_time_api_date);
       }, []);
     var week_object = [
         {"name":"א", "date":firstday.getDate(),"month":firstday.getMonth(),},
