@@ -2,11 +2,19 @@ import React from 'react';
 import {useState} from 'react';
 const CalendarDate = ({day,isActive,onShow,clickFunction}) => {
     // const [isActive, setIsActive] = useState(false);
+    var api_date = day.date
+    if(api_date < 10){
+        api_date = "0"+api_date
+    }
+    var api_month = day.month+1
+    if(api_month < 10){
+        api_month = "0"+api_month
+    }
     const assignActive = (e) =>{
         var curr = new Date;
         var calendar_day = new Date(curr.setDate(day.date))
         onShow(day.date);
-        clickFunction((calendar_day.getFullYear()+"-"+calendar_day.getMonth()+1)+"-"+calendar_day.getDate());
+        clickFunction(calendar_day.getFullYear()+"-"+ api_month +"-"+api_date);
     }
     
     return(

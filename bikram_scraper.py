@@ -13,7 +13,7 @@ import datetime
 
 class WebSpider(scrapy.Spider):
     name = 'bikramspider'
-    filename = "bikram3.csv"
+    filename = "bikram.csv"
     custom_settings = {
         'FEED_FORMAT': 'csv',
         'FEED_URI': filename,

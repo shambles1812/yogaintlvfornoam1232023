@@ -24,14 +24,75 @@ const Calendar = ({setFetching,setMobileDate,chosenDate}) => {
         localStorage.setItem('fetching', JSON.stringify(fetching));
         // setFetching(fetching)
     },[fetching])
-    var curr = new Date; // get current date
+    const curr = new Date; // get current date
     var curr_date = curr.getDate();
-    var curr_month = ("0" + curr.getMonth()+1).slice(-2);
+    
+    
     var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
     var last = first + 6; // last day is the first day + 6
     
-    var firstday = new Date(curr.setDate(first)).getDate();
-    var lastday = new Date(curr.setDate(last)).getDate();
+    var firstday = new Date(curr.setDate(first))
+    // var firstday = new Date(curr.setDate(first)).getDate();
+
+    // const secondday = new Date(firstday);
+    // secondday.setDate(secondday.getDate())
+    // if(curr_date > secondday.getDate()){
+    //     secondday.setMonth(curr.getMonth()+1)
+    // }
+    const secondday = new Date(curr);
+    secondday.setDate(secondday.getDate() +1)
+    if(curr_date - 7 > secondday.getDate()){
+        secondday.setMonth(curr.getMonth()+1)
+    }
+
+    const thirdday = new Date(curr);
+    thirdday.setDate(thirdday.getDate() +2)
+    if(curr_date - 7 > thirdday.getDate()){
+        thirdday.setMonth(curr.getMonth()+1)
+    }
+
+    const fourthday = new Date(curr);
+    fourthday.setDate(fourthday.getDate() +3)
+    if(curr_date - 7 > fourthday.getDate()){
+        fourthday.setMonth(curr.getMonth()+1)
+    }
+
+    const fifthday = new Date(curr);
+    fifthday.setDate(fifthday.getDate() +4)
+    if(curr_date - 7 > fifthday.getDate()){
+        fifthday.setMonth(curr.getMonth()+1)
+    }
+
+    const sixthday = new Date(curr);
+    sixthday.setDate(sixthday.getDate() +5)
+    if(curr_date - 7 > sixthday.getDate()){
+        sixthday.setMonth(curr.getMonth()+1)
+    }
+
+    const seventhday = new Date(curr);
+    seventhday.setDate(seventhday.getDate() +6)
+    if(curr_date - 7 > seventhday.getDate()){
+        
+        seventhday.setMonth(curr.getMonth()+1)
+        
+    }
+
+    var calendar_firstday_month = firstday.getMonth()+1
+    if( calendar_firstday_month < 10){
+        calendar_firstday_month = "0" + calendar_firstday_month
+    }
+    var calendar_firstday = firstday.getDate()
+    if( calendar_firstday < 10){
+        calendar_firstday = "0" + calendar_firstday
+    }
+    var calendar_seventhday_month = seventhday.getMonth()+1
+    if( calendar_seventhday_month < 10){
+        calendar_seventhday_month = "0" + calendar_seventhday_month
+    }
+    var calendar_seventhday = seventhday.getDate()
+    if( calendar_seventhday < 10){
+        calendar_seventhday = "0" + calendar_seventhday
+    }
     // var week_array = Array.from({length: 7}, (_, i) => i + firstday)
     // const day_name = ["א","ב","ג","ד","ה","ו","ש"]
     // const [chosenDate, setchosenDate] = useState(curr_date);
@@ -105,13 +166,13 @@ const Calendar = ({setFetching,setMobileDate,chosenDate}) => {
         handleAPIReqDay(curr.getFullYear()+"-"+curr.getMonth()+1+"-"+chosenDate);
       }, []);
     var week_object = [
-        {"name":"א", "date":firstday},
-        {"name":"ב", "date":firstday+1},
-        {"name":"ג", "date":firstday+2},
-        {"name":"ד", "date":firstday+3},
-        {"name":"ה", "date":firstday+4},
-        {"name":"ו", "date":firstday+5},
-        {"name":"ש", "date":firstday+6},
+        {"name":"א", "date":firstday.getDate(),"month":firstday.getMonth(),},
+        {"name":"ב", "date":secondday.getDate(),"month":secondday.getMonth(),},
+        {"name":"ג", "date":thirdday.getDate(),"month":thirdday.getMonth(),},
+        {"name":"ד", "date":fourthday.getDate(),"month":fourthday.getMonth(),},
+        {"name":"ה", "date":fifthday.getDate(),"month":fifthday.getMonth(),},
+        {"name":"ו", "date":sixthday.getDate(),"month":sixthday.getMonth(),},
+        {"name":"ש", "date":seventhday.getDate(),"month":seventhday.getMonth(),},
         
     ]
     
@@ -119,7 +180,7 @@ const Calendar = ({setFetching,setMobileDate,chosenDate}) => {
         <>
         <div className='text-center h-1/6 pt-[25px] text-[18px] font-bold font-inter'>
             
-        {lastday}/{curr_month}-{firstday}/{curr_month}
+        {calendar_seventhday}/{calendar_seventhday_month}-{calendar_firstday}/{calendar_firstday_month}
         </div>
         <div className='grid grid-cols-7 gap-2 2/4 font-bold font-inter text-center pt-[20px] mx-[10px] text-white font-inter'>
             

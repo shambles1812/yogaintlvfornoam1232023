@@ -150,7 +150,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -171,7 +170,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 ALLOWED_HOSTS = ['*']
 
-TIME_ZONE = "Asia/Taipei"
+TIME_ZONE = "Asia/Jerusalem"
 django_heroku.settings(locals())
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
