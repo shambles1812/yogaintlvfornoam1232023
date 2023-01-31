@@ -53,6 +53,7 @@ export default function App_over() {
 
   if(mobileView == true){
     return (<>
+    {localStorage.clear()}
     { 
       firstVisit === null ? (
         <div id="Entirety" className="h-screen w-screen" dir="rtl">
@@ -86,16 +87,16 @@ export default function App_over() {
       
       
       
-      
-      
-      
-     
-      
     );
   }else{
     return (
+
+      <>
       <p>App has no desktop view. Please view this on a Mobile phone </p>
-    );
+      
+      </>
+ 
+      );
   }
   
   

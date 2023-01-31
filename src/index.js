@@ -15,8 +15,6 @@ ReactDOM.render(
    <div className="bg-lavander h-full" dir="rtl">
         <App_over />
         </div> 
-        
-    
  ,
 document.getElementById("app")
 );
