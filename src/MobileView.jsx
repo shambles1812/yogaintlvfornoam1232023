@@ -130,7 +130,7 @@ const MobileView = () => {
         
         <div className="h-1/3 bg-lavander ">
         <Swiper
-            initialSlide={23-chosenHour}
+            initialSlide={chosenHour}
             slidesPerView={5}
             spaceBetween={5}
             onLoad={(swiper) => swiper.slideTo(chosenHour)}
