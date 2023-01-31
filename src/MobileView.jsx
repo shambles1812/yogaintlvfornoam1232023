@@ -33,6 +33,7 @@ const MobileView = () => {
     const [fetching,setFetching] = useState(false);
     const [chosenDate, setchosenDate] = useState(curr_date);
     console.log("Mobile View Chosen Date")
+    console.log(typeof chosenDate)
     console.log(chosenDate)
     useEffect(() => {
       // if (localStorage.getItem('chosenDate')){
@@ -85,7 +86,7 @@ const MobileView = () => {
       console.log(chosenHour)
       console.log(slide_json)
       localStorage.setItem('chosenHour', JSON.stringify(chosenHour));
-      setchosenHour(chosenHour)
+      // setchosenHour(chosenHour)
     }, [chosenHour]);
 
     useEffect(() => {
@@ -142,7 +143,7 @@ const MobileView = () => {
             {
               hours.map( (hour => {
                   return (
-                    <SwiperSlide onClick={() => setchosenHour(hour)} className={chosenHour === hour ? "swiper-slide-active":""}>
+                    <SwiperSlide onClick={() => setchosenHour(hour)} className={chosenHour === toString(hour) ? "swiper-slide-active":""}>
                     <div className="w-[30px] font-bold font-inter">
                       <div className={chosenHour === hour ? "w-[75px] h-[30px] bg-white rounded-[15px]":"w-[75px] h-[30px] rounded-[15px]"}>
                       {hour}:00
