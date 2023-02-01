@@ -230,19 +230,18 @@ const MobileView = () => {
 
               const classStartHour_raw = schedule_json.class_start_hour
               var classStartHour = classStartHour_raw.split(":");
-              // Use the substring() function to extract hours and minutes
+              
               const hours = classStartHour[0];
               const minutes = classStartHour[1];
               
-              // Use the setHours() function to assign hours and minutes
-              // to the "today" date object
+        
               
               
               var classDate = new Date(schedule_json.class_date)
               classDate.setHours(hours)
               classDate.setMinutes(minutes)
-              if(curr < classDate){  // available events
-                return(
+              
+              return(
                   <>
                 {
                   hours >= chosenHour && hours < chosenHour+1 ? <SwiperSlide >
@@ -253,49 +252,13 @@ const MobileView = () => {
 
               )
                 
-            }
+           
               }))
             
               :(<p></p>)
             }
           </>
-          { slide_json ?
-            
-            slide_json.map( (schedule_json =>{
-       
-              var curr = new Date();
-
-              const classStartHour_raw = schedule_json.class_start_hour
-              var classStartHour = classStartHour_raw.split(":");
-              // Use the substring() function to extract hours and minutes
-              const hours = classStartHour[0];
-              const minutes = classStartHour[1];
-              
-              // Use the setHours() function to assign hours and minutes
-              // to the "today" date object
-              
-              
-              var classDate = new Date(schedule_json.class_date)
-              classDate.setHours(hours)
-              classDate.setMinutes(minutes)
-              
-              if(curr >= classDate){  //Pass events
-                return(
-                  <>
-                {
-                  hours >= chosenHour && hours < chosenHour+1 ? <SwiperSlide >
-                  <Slide schedule_json={schedule_json}></Slide>
-                </SwiperSlide>:<p></p>
-                }
-                  </>
-
-              )
-                
-            }
-              }))
-            
-              :(<p></p>)
-            }
+          
 
           </Swiper>
           

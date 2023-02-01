@@ -25,7 +25,7 @@ const Slide = (schedule_json) => {
 
     return (<>
         
-                <div className={ curr < classDate ? (" w-[100%] translate-y-[-25%] h-[60%] bg-white rounded-[30px] mt-[-10%] shadow-xl"):(" w-[100%] translate-y-[-25%] h-[60%] bg-slide-black/[60%] rounded-[30px] mt-[-10%] shadow-xl")}>
+                <div className={  (" w-[100%] translate-y-[-25%] h-[60%] bg-white rounded-[30px] mt-[-10%] shadow-xl")}>
         <div className='mt-[5%] h-[75%] w-[90%] mx-auto'>
             <img src={schedule_json.schedule_json.studio_logo} className="!object-contain"></img>
         

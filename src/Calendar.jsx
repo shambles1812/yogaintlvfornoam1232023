@@ -152,49 +152,12 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                         var slide_date = my_array[0].class_date.split("-")[2]
                         const new_hour = my_array[0].class_start_hour.split(":")[0]
                             
-                        console.log(my_array)
-                        if(slide_date == curr_date){
+                        
+                        
+                        console.log("Setting slide to first available hour for the day")
+                        setMobileHour(parseInt(new_hour))
                             
-
-                            my_array.some((schedule => {
-                                console.log("THIS SCHEDULE")
-                                console.log(schedule)
-                                const today_date = new Date;
-                                var scheduleDate = new Date(schedule.class_date);
-                                const classStartHour_raw = schedule.class_start_hour
-                                var classStartHour = classStartHour_raw.split(":");
-                                // Use the substring() function to extract hours and minutes
-                                var hour = classStartHour[0];
-                                var minutes = classStartHour[1];
-                                
-                                scheduleDate.setHours(hour)
-                                scheduleDate.setMinutes(minutes)
-                                console.log("CHOOSING AN HOUR")
-                                console.log(parseInt(hour))
-                                if(scheduleDate<today_date){
-                                    console.log(scheduleDate)
-                                    console.log(today_date)
-                                    scheduleDate.setDate(scheduleDate.getDate()+1)
-                                    console.log("TOMORROW WILL BE")
-                                    console.log(scheduleDate.getDate())
-                                    setMobileDate(scheduleDate.getDate())
-                                   
-                                    
-                                    
-                                }else{
-                                    setMobileHour(parseInt(new_hour))
-                                    
-                                    return "Found";
-                                }
-                            }))
-                                
-                                
-                            
-                        }else{
-                            console.log("THE SLIDE THE IS NOT THE SAME AS TODAY")
-                            setMobileHour(parseInt(new_hour))
-                            
-                        }
+                       
                         // console.log("HERE SORTED")
                         // console.log(new_array)
                         setFetching(false)
