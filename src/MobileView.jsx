@@ -174,8 +174,8 @@ const MobileView = () => {
         
         const hours = classStartHour[0];
         const minutes = classStartHour[1];
-        if(!(parseInt(hours) in currentActiveHours)){
-          currentActiveHours.push(parseInt(hours))
+        if(!(hours in currentActiveHours)){
+          currentActiveHours.push(hours)
         }
         var classDate = new Date(schedule_json.class_date)
         classDate.setHours(hours)
