@@ -15,6 +15,6 @@ class Yoga(models.Model):
     studio_address = models.CharField(max_length=120)
     phone_number = models.CharField(max_length=20)
     url = models.CharField(max_length=200)
-    studio_name = models.CharField(max_length=200)
+    studio_name = models.CharField(default = None, max_length=200,null=True,blank=True)
 
     
