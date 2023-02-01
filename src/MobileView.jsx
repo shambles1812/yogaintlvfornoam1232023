@@ -21,19 +21,30 @@ const MobileView = () => {
     var curr = new Date(); // get current date
     var curr_hour = curr.getHours()
     var curr_date = curr.getDate();
+
     const {slide_json,setSlideJson} = useContext(SlideContext)
-    // var local_date = JSON.parse(localStorage.getItem('chosenDate'))
-    // if (typeof local_date !== undefined){
-    //   curr_date = local_date
-    // }
     const [chosenHour, setchosenHour] = useState(curr_hour);
     const [hourSwiper, setHourSwiper] = useState(null);
     const [fetching,setFetching] = useState(false);
     const [chosenDate, setchosenDate] = useState(curr_date);
-    console.log("Mobile View Chosen Date")
-    console.log(typeof chosenDate)
-    console.log(chosenDate)
+
+    const [inactiveStudios,setInactiveStudios] = useState();
+    
+    const studios = [
+      {"studio_name":"a studio name","studio_logo":"a studio logo"}
+    ]
+    const allStudios = [
+    ]
     useEffect(() => {
+      
+      var inactiveStudios = []
+      var activeStudios = []
+      slide_json.forEach( (schedule_json =>{
+        if(!(schedule_json.studio_name in activeStudios)){
+          activeStudios.push(schedule_json.studio_name)
+        }
+      }))
+      console.log(activeStudios)
       // if (localStorage.getItem('chosenDate')){
       //   const chosenDate = JSON.parse(localStorage.getItem('chosenDate'));
       // }
@@ -42,7 +53,7 @@ const MobileView = () => {
          
       //     setchosenDate(chosenDate);
       // }
-    }, []);
+    }, [slide_json]);
   useEffect(() => {
     console.log("SETTING CUR HOUR")
     
@@ -258,7 +269,41 @@ const MobileView = () => {
               :(<p></p>)
             }
           </>
-          
+          { slide_json ?
+            
+            slide_json.map( (schedule_json =>{
+       
+              var curr = new Date();
+
+              const classStartHour_raw = schedule_json.class_start_hour
+              var classStartHour = classStartHour_raw.split(":");
+              
+              const hours = classStartHour[0];
+              const minutes = classStartHour[1];
+              
+        
+              
+              
+              var classDate = new Date(schedule_json.class_date)
+              classDate.setHours(hours)
+              classDate.setMinutes(minutes)
+              
+              return(
+                  <>
+                {
+                  hours >= chosenHour && hours < chosenHour+1 ? <SwiperSlide >
+                  <Slide schedule_json={schedule_json}></Slide>
+                </SwiperSlide>:<p></p>
+                }
+                  </>
+
+              )
+                
+           
+              }))
+            
+              :(<p></p>)
+            }
 
           </Swiper>
           
