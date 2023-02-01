@@ -12,11 +12,6 @@ import time
 import subprocess
 from rest_framework import status
 
-def run_scrapers():
-    bikram_subprocess = subprocess.Popen('python bikram_scraper.py')
-    bikram_subprocess.wait()
-    bikram_db_upload = subprocess.Popen('python bikram_uploader.py')
-    bikram_db_upload.wait()
 
 class UserAuthView(APIView):
 
@@ -65,7 +60,7 @@ class UserAuthView(APIView):
                 {"err":"Did not match password"},status=status.HTTP_400_BAD_REQUEST
             )
         
-        sleep_timer = self.check_date(request.query_params.get('date'))
+        self.check_date(request.query_params.get('date'))
         
         serializers = UserSerializer(username_valid)
         return Response(serializers.data, status=status.HTTP_200_OK)

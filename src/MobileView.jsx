@@ -30,14 +30,14 @@ const MobileView = () => {
     const {slide_json,setSlideJson} = useContext(SlideContext)
     const [chosenHour, setchosenHour] = useState(curr_hour);
     const [hourSwiper, setHourSwiper] = useState(null);
-    const [fetching,setFetching] = useState(false);
+    const [fetching,setFetching] = useState(true);
     
     const [chosenDate, setchosenDate] = useState(curr_date);
 
     const [inactiveStudios,setInactiveStudios] = useState([]);
     const [activeStudios,setActiveStudios] = useState([]);
 
-     const fixed_hours = [
+     var fixed_hours = [
       
      
       23,
@@ -65,6 +65,7 @@ const MobileView = () => {
       1,
       0
     ]
+    fixed_hours = fixed_hours.reverse()
     const [activeHours,setActiveHours] = useState(fixed_hours);
     // const studios = [
     //   {"studio_name":"איקיגאי",
@@ -173,7 +174,7 @@ const MobileView = () => {
         
         const hours = classStartHour[0];
         const minutes = classStartHour[1];
-        if(!(hours in currentActiveHours)){
+        if(!(parseInt(hours) in currentActiveHours)){
           currentActiveHours.push(parseInt(hours))
         }
         var classDate = new Date(schedule_json.class_date)
@@ -207,7 +208,7 @@ const MobileView = () => {
     })
   
     var hours = activeHours
-    hours = hours.reverse()
+    
     return (
         <>{ fetching === true ? (<LoadingView />) : (
           <></>
