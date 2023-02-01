@@ -24,8 +24,7 @@ import time
 
 
 class YogaDetailApiView(APIView):
-    # add permission to check if user is authenticated
-    # permission_classes = [permissions.IsAuthenticated]
+
 
     def get_schedules(self, date):
         '''

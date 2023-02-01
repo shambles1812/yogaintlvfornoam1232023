@@ -13,4 +13,5 @@ class YogaSerializer(serializers.ModelSerializer):
               'class_teacher',
               'studio_address',
               'phone_number',
-              'url')
+              'url',
+              'studio_name')

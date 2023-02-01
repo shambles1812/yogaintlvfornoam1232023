@@ -15,9 +15,6 @@ import { Pagination } from "swiper";
 import { SlideContext } from "./context/SlideContext";
 import LoadingView from "./LoadingView";
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 const MobileView = () => {
     const swiper = useSwiper();
