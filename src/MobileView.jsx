@@ -181,7 +181,7 @@ const MobileView = () => {
         classDate.setHours(hours)
         classDate.setMinutes(minutes)
         if(hours >= chosenHour && hours < chosenHour+1){
-          if(!(schedule_json.studio_name in currentActiveStudios )){
+          if(!currentActiveStudios.includes(schedule_json.studio_name)){
             currentActiveStudios.push(schedule_json.studio_name)
             console.log("ACTIVE STUDIO FOUND")
           }
