@@ -36,6 +36,36 @@ const MobileView = () => {
 
     const [inactiveStudios,setInactiveStudios] = useState([]);
     const [activeStudios,setActiveStudios] = useState([]);
+
+     const fixed_hours = [
+      
+     
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16,
+      15,
+      14,
+      13,
+      12,
+      11,
+      10,
+      9,
+      8,
+      7,
+      6,
+      5,
+      4,
+      3,
+      2,
+      1,
+      0
+    ]
+    const [activeHours,setActiveHours] = useState(fixed_hours);
     // const studios = [
     //   {"studio_name":"איקיגאי",
     //   "studio_logo":"https://static.wixstatic.com/media/4d0a61_d2686cde98304e9fac4a8812934e6d84~mv2.png/v1/crop/x_0,y_0,w_282,h_289/fill/w_36,h_36,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Asset%203_3x.png",
@@ -131,17 +161,21 @@ const MobileView = () => {
       console.log(slide_json)
       localStorage.setItem('chosenHour', JSON.stringify(chosenHour));
       setInactiveStudios([])
+      setActiveHours([])
       console.log("CHECKING SLIDE JSON")
       console.log(chosenHour)
       var currentActiveStudios = []
-      
+      var currentActiveHours = []
+
       slide_json.forEach(schedule_json=>{
         const classStartHour_raw = schedule_json.class_start_hour
         var classStartHour = classStartHour_raw.split(":");
         
         const hours = classStartHour[0];
         const minutes = classStartHour[1];
-  
+        if(!(hours in currentActiveHours)){
+          currentActiveHours.push(parseInt(hours))
+        }
         var classDate = new Date(schedule_json.class_date)
         classDate.setHours(hours)
         classDate.setMinutes(minutes)
@@ -153,6 +187,10 @@ const MobileView = () => {
         }
         
       })
+
+      console.log("CURRENT ACTIVE HOURS")
+      console.log(currentActiveHours)
+      setActiveHours(currentActiveHours)
       console.log(currentActiveStudios)
       var currinactiveStudios = allStudios.filter(x => !currentActiveStudios.includes(x));
       console.log(allStudios)
@@ -167,34 +205,8 @@ const MobileView = () => {
     useEffect(() => {
 
     })
-   var hours = [
-      
-     
-      23,
-      22,
-      21,
-      20,
-      19,
-      18,
-      17,
-      16,
-      15,
-      14,
-      13,
-      12,
-      11,
-      10,
-      9,
-      8,
-      7,
-      6,
-      5,
-      4,
-      3,
-      2,
-      1,
-      0
-    ]
+  
+    var hours = activeHours
     hours = hours.reverse()
     return (
         <>{ fetching === true ? (<LoadingView />) : (
@@ -277,15 +289,7 @@ const MobileView = () => {
                     </div>
   
             </SwiperSlide>
-            <SwiperSlide >
-                    <div className="w-[30px] font-bold font-inter" >
-                      <div className="w-[75px] h-[30px] rounded-[15px]">
-                     
-                        
-                      </div>
-                    </div>
-  
-            </SwiperSlide>
+   
           </Swiper>
         </div>
         </div>
