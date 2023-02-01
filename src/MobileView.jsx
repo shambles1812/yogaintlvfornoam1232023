@@ -28,7 +28,7 @@ const MobileView = () => {
     var curr_date = curr.getDate();
 
     const {slide_json,setSlideJson} = useContext(SlideContext)
-    const [chosenHour, setchosenHour] = useState(curr_hour);
+    const [chosenHour, setchosenHour] = useState(1);
     const [hourSwiper, setHourSwiper] = useState(null);
     const [fetching,setFetching] = useState(true);
     
