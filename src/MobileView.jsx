@@ -201,6 +201,7 @@ const MobileView = () => {
       setInactiveStudios(currinactiveStudios)
       console.log("Updated inactive studio")
       console.log(studios[inactiveStudios[0]])
+      
     }, [chosenHour]);
 
     useEffect(() => {
@@ -234,7 +235,7 @@ const MobileView = () => {
             onSwiper={setHourSwiper}
             
             > 
-            {hourSwiper? hourSwiper.slideTo(chosenHour): console.log("nothing initialized")}
+            {/* {hourSwiper? hourSwiper.slideTo(chosenHour): console.log("nothing initialized")} */}
             {/* {hourSwiper? setActiveStudios([]): console.log("resetting active studios")} */}
             {
               

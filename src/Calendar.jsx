@@ -165,7 +165,7 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                   
                   
               } catch (err) {
-                await delay(60000)
+                await delay(15000)
                 handleAPIReqDay(date)
                 setFetching(true)
                 console.log("Still Requesting")
