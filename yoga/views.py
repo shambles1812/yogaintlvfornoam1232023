@@ -51,5 +51,6 @@ class YogaDetailApiView(APIView):
                 {"err": "No Schedules Found"},
                 status=status.HTTP_400_BAD_REQUEST
             )
+        time.sleep(3)
         # serializer = YogaSerializer(schedules)
         return Response(schedules, status=status.HTTP_200_OK)

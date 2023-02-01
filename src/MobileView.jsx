@@ -13,8 +13,13 @@ import "./index.css"
 // import required modules
 import { Pagination } from "swiper";
 import { SlideContext } from "./context/SlideContext";
-import LoadingView from "./LoadingView";
 
+import LoadingView from "./LoadingView";
+import location_svg from './location 1.svg';
+import clock_svg from './clock 1.svg';
+import yoga_svg from './yoga 1.svg';
+import call_svg from './call.svg';
+import world_svg from './world.svg';
 
 const MobileView = () => {
     const swiper = useSwiper();
@@ -26,14 +31,33 @@ const MobileView = () => {
     const [chosenHour, setchosenHour] = useState(curr_hour);
     const [hourSwiper, setHourSwiper] = useState(null);
     const [fetching,setFetching] = useState(false);
+    
     const [chosenDate, setchosenDate] = useState(curr_date);
 
     const [inactiveStudios,setInactiveStudios] = useState([]);
     const [activeStudios,setActiveStudios] = useState([]);
-    const studios = [
-      {"studio_name":"a studio name","studio_logo":"a studio logo"}
-    ]
+    // const studios = [
+    //   {"studio_name":"איקיגאי",
+    //   "studio_logo":"https://static.wixstatic.com/media/4d0a61_d2686cde98304e9fac4a8812934e6d84~mv2.png/v1/crop/x_0,y_0,w_282,h_289/fill/w_36,h_36,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Asset%203_3x.png",
+    //   "studio_address":"איקיגאי - שנקין 38"}
+    // ]
+    const studios = {
+      "יוגה לבונטין":{"studio_logo":"https://yogalev.co.il/wp-content/uploads/2021/11/trans-logo-58.png",
+      "studio_address":"יוגה לבונטין - לבונטין 7"},//mindbodyonline
+      "ויג'נאנה יוגה":{"studio_logo":"https://yogatlv.co.il/wp-content/uploads/2019/03/logo.png",
+      "studio_address":"ויג'נאנה יוגה - מזא\"ה 22"},//yogatlv
+      "ביקראם יוגה":{"studio_logo":"https://bikramyoga.co.il/wp-content/uploads/2016/02/logo.png",
+      "studio_address":"ביקראם יוגה - בן אביגדור 26"},//bikram
+      "אור היוגה":{"studio_logo":"https://www.oryoga.com/application/assets/images/logo-full.png",
+      "studio_address":"אור היוגה - סירקין 9 על בוגרשוב"},//oryoga
+      "סטודיו נעים במזא\"ה":{"studio_logo":"https://m2.fizikal.co.il/wsv2/ImageService.aspx?id=79,2,0&updatedAt=20190924.124112&type=BranchLogo",
+      "studio_address":"סטודיו נעים - מזא\"ה 42 על רוטשילד"},//fizkal
+      "סטודיו נעים באבן גבירול":{"studio_logo":"https://m2.fizikal.co.il/wsv2/ImageService.aspx?id=79,2,0&updatedAt=20190924.124112&type=BranchLogo",
+      "studio_address":"סטודיו נעים - אבן גבירול 108"},//fizkal2
+      "איקיגאי":{"studio_logo":"https://static.wixstatic.com/media/4d0a61_d2686cde98304e9fac4a8812934e6d84~mv2.png/v1/crop/x_0,y_0,w_282,h_289/fill/w_36,h_36,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Asset%203_3x.png",
+      "studio_address":"איקיגאי - שנקין 38"},//ikigai
 
+    }
     const allStudios = [
 
      // "יוגה לבונטין", //mindbodyonline
@@ -85,7 +109,6 @@ const MobileView = () => {
         console.log("CHOSEN HOUR AFTER PARSE")
           console.log(chosenHour)
           setchosenHour(chosenHour);
-          
       }
   }, []);
   
@@ -107,7 +130,38 @@ const MobileView = () => {
       console.log(chosenHour)
       console.log(slide_json)
       localStorage.setItem('chosenHour', JSON.stringify(chosenHour));
-      // setchosenHour(chosenHour)
+      setInactiveStudios([])
+      console.log("CHECKING SLIDE JSON")
+      console.log(chosenHour)
+      var currentActiveStudios = []
+      
+      slide_json.forEach(schedule_json=>{
+        const classStartHour_raw = schedule_json.class_start_hour
+        var classStartHour = classStartHour_raw.split(":");
+        
+        const hours = classStartHour[0];
+        const minutes = classStartHour[1];
+  
+        var classDate = new Date(schedule_json.class_date)
+        classDate.setHours(hours)
+        classDate.setMinutes(minutes)
+        if(hours >= chosenHour && hours < chosenHour+1){
+          if(!(schedule_json.studio_name in currentActiveStudios )){
+            currentActiveStudios.push(schedule_json.studio_name)
+            console.log("ACTIVE STUDIO FOUND")
+          }
+        }
+        
+      })
+      console.log(currentActiveStudios)
+      var currinactiveStudios = allStudios.filter(x => !currentActiveStudios.includes(x));
+      console.log(allStudios)
+      console.log("INACTIVE STUDIOS")
+      console.log(currinactiveStudios)
+      console.log(studios[currinactiveStudios[0]])
+      setInactiveStudios(currinactiveStudios)
+      console.log("Updated inactive studio")
+      console.log(studios[inactiveStudios[0]])
     }, [chosenHour]);
 
     useEffect(() => {
@@ -146,7 +200,8 @@ const MobileView = () => {
         <>{ fetching === true ? (<LoadingView />) : (
           <></>
         )
-        }<>
+        }
+        <>
         <div className="z-0">
         <div className="h-[240px] bg-lavander">
           <Calendar setFetching={setFetching} setMobileDate={setchosenDate} chosenDate={chosenDate} setMobileHour={setchosenHour} chosenHour={chosenHour}/>
@@ -167,6 +222,7 @@ const MobileView = () => {
             
             > 
             {hourSwiper? hourSwiper.slideTo(chosenHour): console.log("nothing initialized")}
+            {/* {hourSwiper? setActiveStudios([]): console.log("resetting active studios")} */}
             {
               
               hours.map( (hour => {
@@ -256,13 +312,7 @@ const MobileView = () => {
               
               const hours = classStartHour[0];
               const minutes = classStartHour[1];
-              
-              if(!(schedule_json.studio_name in activeStudios)){
-                var currActiveStudios = activeStudios
-                currActiveStudios.push(schedule_json.studio_name)
-                setActiveStudios(currActiveStudios)
-              }
-              
+        
               var classDate = new Date(schedule_json.class_date)
               classDate.setHours(hours)
               classDate.setMinutes(minutes)
@@ -283,6 +333,42 @@ const MobileView = () => {
             
               :(<p></p>)
             }
+          </>
+          <>{
+            inactiveStudios ? inactiveStudios.map(inactiveStudio => {
+              
+              return(
+                <SwiperSlide>
+        <div id="image container"className={  (" w-[100%] translate-y-[-25%] h-[60%] bg-black/[75%] rounded-[30px] mt-[-10%] shadow-xl")}>
+          <div className='mt-[5%] h-[75%] w-[90%] mx-auto'>
+              <img src={studios[inactiveStudio].studio_logo} className="!object-contain"></img>
+          
+          </div>
+          <div className="w-[91%]  h-auto bg-white rounded-[18px]  mx-auto my-[8%] py-[2%] shadow-xl">
+          
+              
+              <div className="font-bold text-[18px] text-right font-heebo pr-[5%] pt-[3%]">
+              <p >
+                  {" לא נמצאו שיעורים"}</p>
+              </div>
+
+              
+
+          <div className="text-right  pr-[5%] my-[1%] font-heebo text-[16px]">
+              <p className='!inline'>
+              <img src={location_svg} className="!inline s!object-contain !w-[10%] translate-y-[-4px]" >
+              </img>
+              {" "+studios[inactiveStudio].studio_address}
+              </p>
+              </div>
+              
+
+          </div>
+          </div> 
+                </SwiperSlide>
+              )
+            }):<p></p>
+          }
           </>
           
 

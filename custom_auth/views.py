@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 import bcrypt
 import json
+import time
 import subprocess
 from rest_framework import status
 
@@ -38,14 +39,14 @@ class UserAuthView(APIView):
                 login_obj.no_of_logins+=1
                 login_obj.save()
                 # run_scrapers()
-                return "Record Exists"
+                
                 
         except Logins.DoesNotExist:
             print("Creating Login for the day and Running Scrapers")
             
             new = Logins(login_date=date,no_of_logins=1)
             new.save()
-            return None
+            
             
     def get(self,request,*args, **kwargs):
         '''
@@ -63,7 +64,8 @@ class UserAuthView(APIView):
             return Response(
                 {"err":"Did not match password"},status=status.HTTP_400_BAD_REQUEST
             )
-        print("I got called")
-        self.check_date(request.query_params.get('date'))
+        
+        sleep_timer = self.check_date(request.query_params.get('date'))
+        
         serializers = UserSerializer(username_valid)
         return Response(serializers.data, status=status.HTTP_200_OK)

@@ -118,7 +118,7 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
     //     console.log(chosenDate)
     //     // localStorage.setItem('chosenDate', JSON.stringify(chosenDate));
     //   }, [chosenDate]);
-      
+    const delay = ms => new Promise(res => setTimeout(res, ms));
     const handleAPIReqDay = (date) => {
         setFetching(true);
         const fetch_data = async(e) => {
@@ -165,10 +165,12 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                   
                   
               } catch (err) {
-                setFetching(false)
-                console.log("Fetching set to false")
-                setSlideJson([])
-                console.log("Empty Slide Json")
+                await delay(60000)
+                handleAPIReqDay(date)
+                setFetching(true)
+                console.log("Still Requesting")
+                // setSlideJson([])
+                // console.log("Empty Slide Json")
             }
         }
         fetch_data(date);
@@ -191,6 +193,8 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
         console.log(date_now.getFullYear()+"-"+first_time_api_month+"-"+first_time_api_date)
         handleAPIReqDay(date_now.getFullYear()+"-"+first_time_api_month+"-"+first_time_api_date);
       }, []);
+
+    
     var week_object = [
         {"name":"א", "date":firstday.getDate(),"month":firstday.getMonth(),},
         {"name":"ב", "date":secondday.getDate(),"month":secondday.getMonth(),},
