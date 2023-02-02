@@ -322,6 +322,9 @@ const MobileView = () => {
               var classDate = new Date(schedule_json.class_date)
               classDate.setHours(hours)
               classDate.setMinutes(minutes)
+
+              console.log("TESTING INACTIVES")
+              console.log(inactiveStudios)
               if (hours >= chosenHour && hours < chosenHour+1 ) {
                 return(
                   <>
