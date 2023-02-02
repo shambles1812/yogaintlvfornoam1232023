@@ -15,6 +15,7 @@ import { Pagination } from "swiper";
 import { SlideContext } from "./context/SlideContext";
 
 import LoadingView from "./LoadingView";
+import yogatlv from "./yogatlv.jpeg"
 import location_svg from './location 1.svg';
 import clock_svg from './clock 1.svg';
 import yoga_svg from './yoga 1.svg';
@@ -75,7 +76,7 @@ const MobileView = () => {
     const studios = {
       "יוגה לבונטין":{"studio_logo":"https://yogalev.co.il/wp-content/uploads/2021/11/trans-logo-58.png",
       "studio_address":"יוגה לבונטין - לבונטין 7"},//mindbodyonline
-      "ויג'נאנה יוגה":{"studio_logo":"https://yogatlv.co.il/wp-content/uploads/2019/03/logo.png",
+      "ויג'נאנה יוגה":{"studio_logo":yogatlv,
       "studio_address":"ויג'נאנה יוגה - מזא\"ה 22"},//yogatlv
       "ביקראם יוגה":{"studio_logo":"https://bikramyoga.co.il/wp-content/uploads/2016/02/logo.png",
       "studio_address":"ביקראם יוגה - בן אביגדור 26"},//bikram
