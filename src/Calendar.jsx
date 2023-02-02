@@ -152,10 +152,10 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                         const new_hour = my_array[0].class_start_hour.split(":")[0]
                             
                         
-                        var curr_calendar_date = curr.getDate()
+                       
                         var curr_calendar_hour = curr.getHour()
                         console.log("SORTED DATA")
-                        if(parseInt(slide_date) === curr_calendar_date ){
+                        if(parseInt(slide_date) === curr_date ){
                             setMobileHour(curr_calendar_hour)
                             setFetching(false)
                         }else{
