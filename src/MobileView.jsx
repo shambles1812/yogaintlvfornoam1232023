@@ -161,6 +161,7 @@ const MobileView = () => {
       console.log("Onclick chosen hour")
       console.log(chosenHour)
       console.log(slide_json)
+      hourSwiper.slideTo(hourSwiper.activeIndex)
       localStorage.setItem('chosenHour', JSON.stringify(chosenHour));
       setInactiveStudios([])
       setActiveHours([])
