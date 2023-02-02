@@ -309,7 +309,7 @@ const MobileView = () => {
           <>
           { slide_json ?
             
-            slide_json.map( (schedule_json =>{
+            slide_json.map( ((schedule_json,index,arr) =>{
        
               var curr = new Date();
 
@@ -322,60 +322,63 @@ const MobileView = () => {
               var classDate = new Date(schedule_json.class_date)
               classDate.setHours(hours)
               classDate.setMinutes(minutes)
-              
-              return(
+              if (hours >= chosenHour && hours < chosenHour+1 ) {
+                return(
                   <>
-                {
-                  hours >= chosenHour && hours < chosenHour+1 ? <SwiperSlide >
+                  <SwiperSlide >
                   <Slide schedule_json={schedule_json}></Slide>
-                </SwiperSlide>:<p></p>
-                }
+                  </SwiperSlide>
                   </>
+                )
+              }
 
-              )
-                
-           
+              if (arr.length -1 == index) {
+                return(
+                  <>
+                  {
+                    inactiveStudios ? inactiveStudios.map(inactiveStudio => {
+              
+                      return(
+                        <SwiperSlide>
+                <div id="image container"className={  (" w-[100%] translate-y-[-25%] h-[60%] bg-black/[75%] rounded-[30px] mt-[-10%] shadow-xl")}>
+                  <div className='mt-[5%] h-[75%] w-[90%] mx-auto'>
+                      <img src={studios[inactiveStudio].studio_logo} className="!object-contain"></img>
+                  
+                  </div>
+                  <div className="w-[91%]  h-auto bg-white rounded-[18px]  mx-auto my-[8%] py-[2%] shadow-xl">
+                  
+                      
+                      <div className="font-bold text-[18px] text-right font-heebo pr-[5%] pt-[3%]">
+                      <p >
+                          {" לא נמצאו שיעורים"}</p>
+                      </div>
+        
+                      
+        
+                  <div className="text-right  pr-[5%] my-[1%] font-heebo text-[16px]">
+                      <p className='!inline'>
+                      <img src={location_svg} className="!inline s!object-contain !w-[10%] translate-y-[-4px]" >
+                      </img>
+                      {" "+studios[inactiveStudio].studio_address}
+                      </p>
+                      </div>
+                      
+        
+                  </div>
+                  </div> 
+                        </SwiperSlide>
+                      )
+                    }):<p></p>
+                  }
+                  </>
+                )
+              }
               }))
             
               :(<p></p>)
             }
           </>
-          <>{
-            inactiveStudios ? inactiveStudios.map(inactiveStudio => {
-              
-              return(
-                <SwiperSlide>
-        <div id="image container"className={  (" w-[100%] translate-y-[-25%] h-[60%] bg-black/[75%] rounded-[30px] mt-[-10%] shadow-xl")}>
-          <div className='mt-[5%] h-[75%] w-[90%] mx-auto'>
-              <img src={studios[inactiveStudio].studio_logo} className="!object-contain"></img>
-          
-          </div>
-          <div className="w-[91%]  h-auto bg-white rounded-[18px]  mx-auto my-[8%] py-[2%] shadow-xl">
-          
-              
-              <div className="font-bold text-[18px] text-right font-heebo pr-[5%] pt-[3%]">
-              <p >
-                  {" לא נמצאו שיעורים"}</p>
-              </div>
-
-              
-
-          <div className="text-right  pr-[5%] my-[1%] font-heebo text-[16px]">
-              <p className='!inline'>
-              <img src={location_svg} className="!inline s!object-contain !w-[10%] translate-y-[-4px]" >
-              </img>
-              {" "+studios[inactiveStudio].studio_address}
-              </p>
-              </div>
-              
-
-          </div>
-          </div> 
-                </SwiperSlide>
-              )
-            }):<p></p>
-          }
-          </>
+        
           
 
           </Swiper>

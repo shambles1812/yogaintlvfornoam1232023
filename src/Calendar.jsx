@@ -133,8 +133,6 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                       withCredentials:true
                     }).then(res => {
                         setSlideJson(res.data);
-                        console.log("I FOUND SOME DATA")
-                        console.log(res.data)
                         var my_array = res.data
                          my_array.sort(
                             (a,b) => {
