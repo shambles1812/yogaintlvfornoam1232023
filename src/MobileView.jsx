@@ -339,7 +339,7 @@ const MobileView = () => {
                 return(
                   <>
                   {
-                    inactiveStudios ? inactiveStudios.map(inactiveStudio => {
+                    inactiveStudios.map(inactiveStudio => {
               
                       return(
                         <SwiperSlide>
@@ -371,7 +371,7 @@ const MobileView = () => {
                   </div> 
                         </SwiperSlide>
                       )
-                    }):<p></p>
+                    })
                   }
                   </>
                 )
