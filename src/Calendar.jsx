@@ -154,11 +154,14 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                         var calendar_curr_day = new Date;
                         var curr_calendar_date = calendar_curr_day.getDate()
                         var curr_calendar_hour = calendar_curr_day.getHour()
+                        
                         if(curr_calendar_date == slide_date){
                             setMobileHour(curr_calendar_hour)
+                            setFetching(false)
                         }else{
                             console.log("Setting slide to first available hour for the day")
                             setMobileHour(parseInt(new_hour))
+                            setFetching(false)
                         }
                         
                         
