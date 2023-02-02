@@ -29,7 +29,7 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
     },[fetching])
     const curr = new Date; // get current date
     var curr_date = curr.getDate();
-
+    var curr_hour = curr.getHours()
     
     var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
     var last = first + 6; // last day is the first day + 6
@@ -153,10 +153,10 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                             
                         
                        
-                        var curr_calendar_hour = curr.getHours()
+                        
                         console.log("SORTED DATA")
                         if(parseInt(slide_date) === curr_date ){
-                            setMobileHour(curr_calendar_hour)
+                            setMobileHour(curr_hour)
                             setFetching(false)
                         }else{
                             console.log("Setting slide to first available hour for the day")
