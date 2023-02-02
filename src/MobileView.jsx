@@ -296,7 +296,7 @@ const MobileView = () => {
           </Swiper>
         </div>
         </div>
-        <div  className="bg-lavander h-2/3">
+        <div  className="bg-lavander h-[550px]">
           
           <Swiper
             pagination={{
