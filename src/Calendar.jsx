@@ -152,22 +152,23 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                         const new_hour = my_array[0].class_start_hour.split(":")[0]
                             
                         
-                        // var curr_calendar_date = curr.getDate()
-                        // var curr_calendar_hour = curr.getHour()
+                        var curr_calendar_date = curr.getDate()
+                        var curr_calendar_hour = curr.getHour()
+                        console.log("SORTED DATA")
+                        if(parseInt(slide_date) === curr_calendar_date ){
+                            setMobileHour(curr_calendar_hour)
+                            setFetching(false)
+                        }else{
+                            console.log("Setting slide to first available hour for the day")
+                            setMobileHour(parseInt(new_hour))
+                            setFetching(false)
+                        }
 
-                        // if(curr_calendar_date == slide_date){
-                        //     setMobileHour(curr_calendar_hour)
-                        //     setFetching(false)
-                        // }else{
-                        //     console.log("Setting slide to first available hour for the day")
-                        //     setMobileHour(parseInt(new_hour))
-                        //     setFetching(false)
-                        // }
-                        console.log("Setting slide to first available hour for the day")
-                        setMobileHour(parseInt(new_hour))
+
+                        // console.log("Setting slide to first available hour for the day")
+                        // setMobileHour(parseInt(new_hour))
                         
-                            
-                       
+            
                         // console.log("HERE SORTED")
                         // console.log(new_array)
                         setFetching(false)
