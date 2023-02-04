@@ -155,7 +155,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-
+# # uncomment after local is ok
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 

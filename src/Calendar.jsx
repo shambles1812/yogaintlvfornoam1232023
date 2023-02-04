@@ -7,10 +7,9 @@ import axios from './api/axios';
 
 const API_URL = 'test/api/yoga_date';
 
-const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour}) => {
+const Calendar = ({setFetching,setMobileDate,mobileDate,setMobileHour,mobileHour,firstRequest,setFirstRequest}) => {
     
-    const errRef = useRef()
-    const [schedules,setSchedules] = useState("Init")
+    
     const {slide_json,setSlideJson} = useContext(SlideContext)
     const [fetching,setCalendarFetching] = useState(false);
 
@@ -147,16 +146,62 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
                                 return a_date - b_date   
                             }
                         )
-                        console.log("SORTED DATA")
+                        
+                        console.log("ARRAY DATE")
                         var slide_date = my_array[0].class_date.split("-")[2]
+                        
                         const new_hour = my_array[0].class_start_hour.split(":")[0]
-                            
                         
-                       
+                        console.log(slide_date)
+                        if(parseInt(slide_date) < 10){
+                            console.log("TOMORROW")
+                            var tomorrow = my_array[0].class_date.split("-")[0] + "-" + my_array[0].class_date.split("-")[1] + "-0" + (parseInt(slide_date)+1)
+                            console.log(tomorrow)
+                        }else{
+                            var tomorrow = my_array[0].class_date.split("-")[0] + "-" + my_array[0].class_date.split("-")[1] + "-" + (parseInt(slide_date)+1)
                         
+                        }
+                        
+                        var dayNow = new Date;
+                        var hourNow = dayNow.getHours()
+                        var dateNow = dayNow.getDate()
                         console.log("SORTED DATA")
-                        if(parseInt(slide_date) === curr_date ){
-                            setMobileHour(curr_hour)
+                        if(parseInt(slide_date) === dateNow ){
+
+                            var mobileHour = parseInt(new_hour)
+                            console.log("Setting slide to first available schedule for current day")
+                            my_array.every(schedule=>{
+                                const classStartHour_raw = schedule.class_start_hour
+                                var classStartHour = classStartHour_raw.split(":");
+                                
+                                const hours = classStartHour[0];
+                                
+                                console.log("CLASS HOUR" + hours)
+                
+                                console.log("CURR HOUR" + curr_hour)
+                                if(parseInt(hours) >= hourNow){
+                                    
+                                    mobileHour = parseInt(hours)
+                                    return false;
+                                }else{
+                                    
+                                    if(firstRequest && !(dayNow.getDay() === 6)){
+                                  
+                                        //SPECIAL CASE IF THERE'S NO CLASS AVAILABLE TODAY RENDER TOMORROW 
+                                        //BUT TODAY MUST NOT BE SATURDAY
+                                        //FIRST REQUEST ON THE API UPON LOGIN
+                                        console.log("I AM CALLED AGAIN")
+                                        setMobileDate(parseInt(slide_date)+1)
+                                        setTimeout(handleAPIReqDay(tomorrow),3000)
+                                        setFirstRequest(false)
+                                        return false;
+                                    }
+                                    return true;
+                                }
+                            })
+                            console.log("SETTING MOBILE HOUR")
+                            console.log(0)
+                            setMobileHour(mobileHour)
                             setFetching(false)
                         }else{
                             console.log("Setting slide to first available hour for the day")
@@ -171,6 +216,7 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
             
                         // console.log("HERE SORTED")
                         // console.log(new_array)
+                        setFirstRequest(false)
                         setFetching(false)
                     });
                   
@@ -191,7 +237,7 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
         var date_now = new Date
         console.log(date_now)
        
-        var first_time_api_date = chosenDate
+        var first_time_api_date = mobileDate
         if (first_time_api_date < 10){
             first_time_api_date = "0"+first_time_api_date
         }
@@ -226,14 +272,15 @@ const Calendar = ({setFetching,setMobileDate,chosenDate,setMobileHour,chosenHour
         <div className='grid grid-cols-7 gap-2 2/4 font-bold font-inter text-center pt-[20px] mx-[10px] text-white font-inter'>
             
             {
-                week_object.map( (day => {
+                week_object.map((day,index)  => {
                     return(
                         <CalendarDate   day={day} 
-                                        isActive={chosenDate === day.date? true : false }
+                                        isActive={mobileDate === day.date? true : false }
                                         onShow={(date) => redirect(date)}
-                                        clickFunction={handleAPIReqDay}/>
+                                        clickFunction={handleAPIReqDay}
+                                        key={index}/>
                     );
-                }))
+                })
             }
             
             

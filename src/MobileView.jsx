@@ -21,6 +21,7 @@ import clock_svg from './clock 1.svg';
 import yoga_svg from './yoga 1.svg';
 import call_svg from './call.svg';
 import world_svg from './world.svg';
+import { act } from "react-dom/test-utils";
 
 const MobileView = () => {
     const swiper = useSwiper();
@@ -32,9 +33,9 @@ const MobileView = () => {
     const [chosenHour, setchosenHour] = useState(1);
     const [hourSwiper, setHourSwiper] = useState(null);
     const [fetching,setFetching] = useState(true);
-    
+    const [activeSlidesJson,setActiveSlidesJson] = useState([])
     const [chosenDate, setchosenDate] = useState(curr_date);
-
+    const [firstRequest,setFirstRequest] = useState(true);
     const [inactiveStudios,setInactiveStudios] = useState([]);
     const [activeStudios,setActiveStudios] = useState([]);
 
@@ -172,7 +173,9 @@ const MobileView = () => {
       console.log(chosenHour)
       var currentActiveStudios = []
       var currentActiveHours = []
-
+      var currentActiveHoursWithIndex = []
+      var currentActiveSlides = []
+      var activeHourIndex = 0
       slide_json.forEach(schedule_json=>{
         const classStartHour_raw = schedule_json.class_start_hour
         var classStartHour = classStartHour_raw.split(":");
@@ -181,7 +184,13 @@ const MobileView = () => {
         const minutes = classStartHour[1];
         if(!currentActiveHours.includes(parseInt(hours))){
           currentActiveHours.push(parseInt(hours))
+          currentActiveHoursWithIndex.push({
+            "hour":parseInt(hours),
+            "index":activeHourIndex
+          })
+          activeHourIndex+=1
         }
+       
         var classDate = new Date(schedule_json.class_date)
         classDate.setHours(hours)
         classDate.setMinutes(minutes)
@@ -190,30 +199,47 @@ const MobileView = () => {
             currentActiveStudios.push(schedule_json.studio_name)
             console.log("ACTIVE STUDIO FOUND")
           }
+          currentActiveSlides.push({"status":"active","schedule":schedule_json})
         }
-        
       })
 
       console.log("CURRENT ACTIVE HOURS")
       console.log(currentActiveHours)
-      setActiveHours(currentActiveHours)
+      console.log(currentActiveHoursWithIndex)
+      setActiveHours(currentActiveHoursWithIndex)
       console.log(currentActiveStudios)
-      var currinactiveStudios = allStudios.filter(x => !currentActiveStudios.includes(x));
+      var currInactiveStudios = allStudios.filter(x => !currentActiveStudios.includes(x));
       console.log(allStudios)
       console.log("INACTIVE STUDIOS")
-      console.log(currinactiveStudios)
-      console.log(studios[currinactiveStudios[0]])
-      setInactiveStudios(currinactiveStudios)
-      console.log("Updated inactive studio")
-      console.log(studios[inactiveStudios[0]])
-      
+      console.log(currInactiveStudios)
+     
+      console.log(studios[currInactiveStudios[0]])
+      setInactiveStudios(currInactiveStudios)
+      currInactiveStudios.forEach(studioname=>{
+        currentActiveSlides.push({"status":"inactive","schedule":studios[studioname]})
+      })
+     
+      console.log("ACTIVE SLIDES")
+      console.log(currentActiveSlides)
+      setActiveSlidesJson(currentActiveSlides)
     }, [chosenHour]);
 
     useEffect(() => {
-
-    })
+      console.log("ACTIVE HOURS SET")
+      
+      activeHours.every(({hour,index})=>{
+        if(hour===chosenHour){
+          console.log("SEARCHING FOR RIGHT INDEX")
+          console.log(hour)
+          console.log(chosenHour)
+          hourSwiper.slideTo(index)
+          return false
+        }
+        return true
+      })
+    },[activeHours])
   
-    var hours = activeHours
+    // var hours = 
     
     return (
         <>{ fetching === true ? (<LoadingView />) : (
@@ -223,13 +249,13 @@ const MobileView = () => {
         <>
         <div className="z-0">
         <div className="h-[240px] bg-lavander">
-          <Calendar setFetching={setFetching} setMobileDate={setchosenDate} chosenDate={chosenDate} setMobileHour={setchosenHour} chosenHour={chosenHour}/>
+          <Calendar setFetching={setFetching} setMobileDate={setchosenDate} mobileDate={chosenDate} setMobileHour={setchosenHour} mobileHour={chosenHour} firstRequest={firstRequest} setFirstRequest={setFirstRequest}/>
         </div>
         
         <div className="h-1/3 bg-lavander ">
         <Swiper
             initialSlide={chosenHour}
-            snapIndex={chosenHour}
+           
             slidesPerView={5}
             spaceBetween={5}
             onActiveIndexChange={() => console.log("active index changed to "+ chosenHour)}
@@ -240,27 +266,26 @@ const MobileView = () => {
             onSwiper={setHourSwiper}
             
             > 
-            {/* {hourSwiper? hourSwiper.slideTo(chosenHour): console.log("nothing initialized")} */}
-            {/* {hourSwiper? setActiveStudios([]): console.log("resetting active studios")} */}
-            {
-              
-              hours.map( (hour => {
+             {
+              activeHours ? (activeHours.map( ({hour,index}) => {
                 
-                  return (
-                    <SwiperSlide onClick={() => setchosenHour(hour)} className={chosenHour === toString(hour) ? "swiper-slide-active":""}>
-                    <div className="w-[30px] font-bold font-inter">
-                      <div className={chosenHour === hour ? "w-[75px] h-[30px] bg-white rounded-[15px]":"w-[75px] h-[30px] rounded-[15px]"}>
-                      {hour}:00
-                        
-                      </div>
+                
+                return (
+                  <SwiperSlide key={index} onClick={() => setchosenHour(hour)} className={chosenHour === toString(hour) ? "swiper-slide-active":""}>
+                  <div className="w-[30px] font-bold font-inter">
+                  <div className={chosenHour === hour ? "w-[75px] h-[30px] bg-white rounded-[15px]":"w-[75px] h-[30px] rounded-[15px]"}>
+                    {hour}:00
+                      
                     </div>
-                    
-                    </SwiperSlide>
-                    );
-                  }))
+                  </div>
+                  
+                  </SwiperSlide>
+                  );
+                })) : (<></>)
+              
                   
             }
-            <SwiperSlide >
+            <SwiperSlide key={101}>
                     <div className="w-[30px] font-bold font-inter" >
                       <div className="w-[75px] h-[30px] rounded-[15px]">
                        
@@ -268,8 +293,8 @@ const MobileView = () => {
                       </div>
                     </div>
   
-            </SwiperSlide>
-            <SwiperSlide >
+            </SwiperSlide >
+            <SwiperSlide key={102}>
                     <div className="w-[30px] font-bold font-inter" >
                       <div className="w-[75px] h-[30px] rounded-[15px]">
                      
@@ -278,7 +303,7 @@ const MobileView = () => {
                     </div>
   
             </SwiperSlide>
-            <SwiperSlide >
+            <SwiperSlide key={103}>
                     <div className="w-[30px] font-bold font-inter" >
                       <div className="w-[75px] h-[30px] rounded-[15px]">
                      
@@ -287,7 +312,7 @@ const MobileView = () => {
                     </div>
   
             </SwiperSlide>
-            <SwiperSlide >
+            <SwiperSlide key={104}>
                     <div className="w-[30px] font-bold font-inter" >
                       <div className="w-[75px] h-[30px] rounded-[15px]">
                      
@@ -312,110 +337,98 @@ const MobileView = () => {
             centeredSlides={true}
             className="cardSwiper bg-lavander">
           <>
-          { slide_json ?
+
+
+
+
+          
+          {
+            activeSlidesJson ? (activeSlidesJson.map( (slideJson,index) => {
+              console.log(slideJson)
+              return(
+                <>
+                 <SwiperSlide >
+               <Slide slideJson={slideJson} key={index}></Slide>
+                </SwiperSlide>
+                </>
+              )
+            })):(<></>)
+          /* { legacy */
+          // slide_json ?
             
-            slide_json.map( ((schedule_json,index,arr) =>{
+          //   slide_json.map( ((schedule_json,index,arr) =>{
        
-              var curr = new Date();
+          //     var curr = new Date();
 
-              const classStartHour_raw = schedule_json.class_start_hour
-              var classStartHour = classStartHour_raw.split(":");
+          //     const classStartHour_raw = schedule_json.class_start_hour
+          //     var classStartHour = classStartHour_raw.split(":");
               
-              const hours = classStartHour[0];
-              const minutes = classStartHour[1];
+          //     const hours = classStartHour[0];
+          //     const minutes = classStartHour[1];
         
-              var classDate = new Date(schedule_json.class_date)
-              classDate.setHours(hours)
-              classDate.setMinutes(minutes)
+          //     var classDate = new Date(schedule_json.class_date)
+          //     classDate.setHours(hours)
+          //     classDate.setMinutes(minutes)
 
-              console.log("TESTING INACTIVES")
-              console.log(inactiveStudios)
-              if (hours >= chosenHour && hours < chosenHour+1 ) {
-                return(
-                  <>
-                  <SwiperSlide >
-                  <Slide schedule_json={schedule_json}></Slide>
-                  </SwiperSlide>
-                  </>
-                )
-              }
+          //     console.log("TESTING INACTIVES")
+          //     console.log(inactiveStudios)
+          //     if (hours >= chosenHour && hours < chosenHour+1 ) {
+          //       return(
+          //         <>
+          //         <SwiperSlide >
+          //         <Slide schedule_json={schedule_json}></Slide>
+          //         </SwiperSlide>
+          //         </>
+          //       )
+          //     }
 
-              // if (arr.length -1 == index) {
-              //   return(
-              //     <>
-              //     {
-              //       inactiveStudios.map(inactiveStudio => {
+          //     // if (arr.length -1 == index) {
+          //     //   return(
+          //     //     <>
+          //     //     {
+          //     //       inactiveStudios.map(inactiveStudio => {
               
-              //         return(
-              //           <SwiperSlide>
-              //   <div id="image container"className={  (" w-[100%] translate-y-[-25%] h-[60%] bg-black/[75%] rounded-[30px] mt-[-10%] shadow-xl")}>
-              //     <div className='mt-[5%] h-[75%] w-[90%] mx-auto'>
-              //         <img src={studios[inactiveStudio].studio_logo} className="!object-contain"></img>
+          //     //         return(
+          //     //           <SwiperSlide>
+          //     //   <div id="image container"className={  (" w-[100%] translate-y-[-25%] h-[60%] bg-black/[75%] rounded-[30px] mt-[-10%] shadow-xl")}>
+          //     //     <div className='mt-[5%] h-[75%] w-[90%] mx-auto'>
+          //     //         <img src={studios[inactiveStudio].studio_logo} className="!object-contain"></img>
                   
-              //     </div>
-              //     <div className="w-[91%]  h-auto bg-white rounded-[18px]  mx-auto my-[8%] py-[2%] shadow-xl">
+          //     //     </div>
+          //     //     <div className="w-[91%]  h-auto bg-white rounded-[18px]  mx-auto my-[8%] py-[2%] shadow-xl">
                   
                       
-              //         <div className="font-bold text-[18px] text-right font-heebo pr-[5%] pt-[3%]">
-              //         <p >
-              //             {" לא נמצאו שיעורים"}</p>
-              //         </div>
+          //     //         <div className="font-bold text-[18px] text-right font-heebo pr-[5%] pt-[3%]">
+          //     //         <p >
+          //     //             {" לא נמצאו שיעורים"}</p>
+          //     //         </div>
         
                       
         
-              //     <div className="text-right  pr-[5%] my-[1%] font-heebo text-[16px]">
-              //         <p className='!inline'>
-              //         <img src={location_svg} className="!inline s!object-contain !w-[10%] translate-y-[-4px]" >
-              //         </img>
-              //         {" "+studios[inactiveStudio].studio_address}
-              //         </p>
-              //         </div>
+          //     //     <div className="text-right  pr-[5%] my-[1%] font-heebo text-[16px]">
+          //     //         <p className='!inline'>
+          //     //         <img src={location_svg} className="!inline s!object-contain !w-[10%] translate-y-[-4px]" >
+          //     //         </img>
+          //     //         {" "+studios[inactiveStudio].studio_address}
+          //     //         </p>
+          //     //         </div>
                       
         
-              //     </div>
-              //     </div> 
-              //           </SwiperSlide>
-              //         )
-              //       })
-              //     }
-              //     </>
-              //   )
-              // }
-              }))
+          //     //     </div>
+          //     //     </div> 
+          //     //           </SwiperSlide>
+          //     //         )
+          //     //       })
+          //     //     }
+          //     //     </>
+          //     //   )
+          //     // }
+          //     }))
             
-              :(<p></p>)
+          //     :(<p></p>)
             }
           </>
-          <>
-          <SwiperSlide>
-        <div id="image container"className={  (" w-[100%] translate-y-[-25%] h-[60%] bg-black/[75%] rounded-[30px] mt-[-10%] shadow-xl")}>
-          <div className='mt-[5%] h-[75%] w-[90%] mx-auto'>
-              <img src={studios["ביקראם יוגה"].studio_logo} className="!object-contain"></img>
-          
-          </div>
-          <div className="w-[91%]  h-auto bg-white rounded-[18px]  mx-auto my-[8%] py-[2%] shadow-xl">
-          
-              
-              <div className="font-bold text-[18px] text-right font-heebo pr-[5%] pt-[3%]">
-              <p >
-                  {" לא נמצאו שיעורים"}</p>
-              </div>
-
-              
-
-          <div className="text-right  pr-[5%] my-[1%] font-heebo text-[16px]">
-              <p className='!inline'>
-              <img src={location_svg} className="!inline s!object-contain !w-[10%] translate-y-[-4px]" >
-              </img>
-              {" "+studios["ביקראם יוגה"].studio_address}
-              </p>
-              </div>
-              
-
-          </div>
-          </div> 
-                </SwiperSlide>
-          </>
+  
           
 
           </Swiper>
